@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" font-family="Segoe UI,Arial,sans-serif">
+<rect width="880" height="480" fill="#fff"/>
+<text x="70" y="30" font-size="18" font-weight="bold" fill="#202124">标准款 iPhone 回收价随机龄的折旧曲线 (首发约6000元)</text>
+<line x1="70" y1="425.0" x2="840" y2="425.0" stroke="#e8eaed"/>
+<text x="62" y="429.0" font-size="11" text-anchor="end" fill="#5f6368">0</text>
+<line x1="70" y1="363.3" x2="840" y2="363.3" stroke="#e8eaed"/>
+<text x="62" y="367.3" font-size="11" text-anchor="end" fill="#5f6368">1000</text>
+<line x1="70" y1="301.7" x2="840" y2="301.7" stroke="#e8eaed"/>
+<text x="62" y="305.7" font-size="11" text-anchor="end" fill="#5f6368">2000</text>
+<line x1="70" y1="240.0" x2="840" y2="240.0" stroke="#e8eaed"/>
+<text x="62" y="244.0" font-size="11" text-anchor="end" fill="#5f6368">3000</text>
+<line x1="70" y1="178.3" x2="840" y2="178.3" stroke="#e8eaed"/>
+<text x="62" y="182.3" font-size="11" text-anchor="end" fill="#5f6368">4000</text>
+<line x1="70" y1="116.7" x2="840" y2="116.7" stroke="#e8eaed"/>
+<text x="62" y="120.7" font-size="11" text-anchor="end" fill="#5f6368">5000</text>
+<line x1="70" y1="55.0" x2="840" y2="55.0" stroke="#e8eaed"/>
+<text x="62" y="59.0" font-size="11" text-anchor="end" fill="#5f6368">6000</text>
+<text x="70.0" y="445.0" font-size="11" text-anchor="middle" fill="#5f6368">0月</text>
+<text x="166.2" y="445.0" font-size="11" text-anchor="middle" fill="#5f6368">12月</text>
+<text x="262.5" y="445.0" font-size="11" text-anchor="middle" fill="#5f6368">24月</text>
+<text x="358.8" y="445.0" font-size="11" text-anchor="middle" fill="#5f6368">36月</text>
+<text x="455.0" y="445.0" font-size="11" text-anchor="middle" fill="#5f6368">48月</text>
+<text x="551.2" y="445.0" font-size="11" text-anchor="middle" fill="#5f6368">60月</text>
+<text x="647.5" y="445.0" font-size="11" text-anchor="middle" fill="#5f6368">72月</text>
+<text x="743.8" y="445.0" font-size="11" text-anchor="middle" fill="#5f6368">84月</text>
+<text x="840.0" y="445.0" font-size="11" text-anchor="middle" fill="#5f6368">96月</text>
+<path d="M70.0,55.0 L94.1,88.3 L118.1,121.6 L142.2,136.4 L166.2,151.2 L190.3,172.5 L214.4,191.9 L238.4,206.7 L262.5,221.5 L286.6,234.4 L310.6,247.4 L334.7,258.5 L358.8,269.6 L382.8,278.9 L406.9,288.1 L430.9,297.4 L455.0,306.6 L479.1,313.1 L503.1,319.6 L527.2,326.0 L551.2,332.5 L575.3,339.0 L599.4,345.4 L623.4,351.9 L647.5,358.4 L671.6,363.9 L695.6,369.5 L719.7,375.1 L743.8,380.6 L767.8,384.3 L791.9,388.0 L815.9,391.7 L840.0,395.4" fill="none" stroke="#ea4335" stroke-width="2.5"/>
+<rect x="70.0" y="55" width="96.2" height="370.0" fill="#ea4335" opacity="0.06"/>
+<text x="118.1" y="417.0" font-size="11" text-anchor="middle" fill="#ea4335">第1年掉价最猛</text>
+<text x="70" y="465" font-size="11" fill="#9aa0a6">越往后越平缓：前1年掉约26%，第5年后基本触底</text>
+</svg>
