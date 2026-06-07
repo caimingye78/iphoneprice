@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iPhone 购买策略顾问</title>
+<style>
+:root{--ink:#202124;--grey:#5f6368;--line:#e8eaed;--blue:#1a73e8;--green:#1e8e3e;--red:#d93025;--bg:#f8f9fa;--card:#fff;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding:28px 18px 70px}
+h1{font-size:25px;margin:0 0 4px}
+.sub{color:var(--grey);font-size:13px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:20px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.row{margin:18px 0}
+.row label{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:8px}
+.row label .val{color:var(--blue);font-weight:700}
+input[type=range]{width:100%;accent-color:var(--blue);height:6px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:8px 16px;font-size:14px;cursor:pointer;color:var(--grey)}
+.seg button.on{background:var(--blue);color:#fff}
+.hint{font-size:12px;color:#9aa0a6;margin-top:4px}
+.result{font-size:14px}
+.big{font-size:32px;font-weight:800;color:var(--green);margin:6px 0}
+.big.warn{color:#e8710a}
+.big.bad{color:var(--red)}
+.kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.kv:last-child{border-bottom:0}
+.kv span:last-child{font-weight:600}
+.bars{margin-top:6px}
+.bar{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+.bar .lab{width:78px;color:var(--grey);flex:none}
+.bar .track{flex:1;background:#eef0f2;border-radius:5px;height:18px;position:relative;overflow:hidden}
+.bar .fill{height:100%;border-radius:5px;background:var(--blue)}
+.bar.best .fill{background:var(--green)}
+.bar .num{width:84px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
+.bar.best .lab{color:var(--green);font-weight:700}
+.dip{font-size:13px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.dip:last-child{border-bottom:0}
+.dip b{color:var(--green)}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:#e6f4ea;color:var(--green);margin-left:6px}
+.msg{background:#e8f0fe;border-left:4px solid var(--blue);padding:12px 16px;border-radius:0 10px 10px 0;font-size:14px;margin-top:14px}
+.foot{color:#9aa0a6;font-size:11px;margin-top:24px;text-align:center}
+.gridcols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:680px){.gridcols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>iPhone 购买策略顾问</h1>
+  <div class="sub">拖动滑块即时计算最省买法、每月真实成本与抄底时点。纯前端,数据不上传。</div>
+
+  <div class="card">
+    <div class="gridcols">
+      <div>
+        <div class="row">
+          <label>机型首发价 <span class="val" id="priceV">¥5999</span></label>
+          <input type="range" id="price" min="3000" max="13000" step="100" value="5999">
+          <div class="hint">标准款约5999,Pro约7999~9999</div>
+        </div>
+        <div class="row">
+          <label>能接受的最大买入机龄 <span class="val" id="ageV">6 月</span></label>
+          <input type="range" id="age" min="0" max="48" step="1" value="6">
+          <div class="hint">0=只买全新;越大=越愿意买旧的二手</div>
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <label>打算使用时长 <span class="val" id="holdV">24 月</span></label>
+          <input type="range" id="hold" min="6" max="60" step="1" value="24">
+          <div class="hint" id="holdHint">约 2.0 年</div>
+        </div>
+        <div class="row">
+          <label>是否愿意买全新</label>
+          <div class="seg" id="newSeg">
+            <button data-v="1" class="on">愿意</button>
+            <button data-v="0">只买二手</button>
+          </div>
+        </div>
+        <div class="row">
+          <label>该机型发布年月</label>
+          <input type="month" id="launch" value="2026-09" style="padding:8px;border:1px solid var(--line);border-radius:8px;font-size:14px">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="result">
+      <div id="recoLine" style="font-size:16px;font-weight:700"></div>
+      <div class="big" id="costBig"></div>
+      <div id="saveLine" style="color:var(--grey);font-size:13px;margin-bottom:14px"></div>
+      <div class="kv"><span>买入价</span><span id="buyP"></span></div>
+      <div class="kv"><span>持有后机龄 / 预计回收价</span><span id="sellP"></span></div>
+      <div class="kv"><span>期间净损耗</span><span id="lossP"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:8px">不同买入机龄的月成本对比</div>
+    <div class="bars" id="bars"></div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:8px">抄底时点(基于每年9月发布会规律)</div>
+    <div id="dips"></div>
+    <div class="hint" style="margin-top:8px">提示:旧机要在下一代发布前(8月底)出手,避免发布会后跳价。</div>
+  </div>
+
+  <div class="msg" id="msg"></div>
+
+  <div class="foot">折旧模型基于近十年公开行情与真实数据点标定;预测/估算仅供参考,实际成交受成色、电池健康度、平台等影响。</div>
+</div>
+
+<script>
+// 残值曲线 rr(t): 回收价/首发价, t=机龄(月)
+var PTS=[[0,1.00],[6,0.82],[12,0.74],[14,0.70],[18,0.63],[24,0.55],
+         [30,0.48],[36,0.42],[48,0.32],[60,0.25],[72,0.18],[84,0.12],[96,0.08]];
+function rr(t){
+  if(t<=PTS[0][0])return PTS[0][1];
+  if(t>=PTS[PTS.length-1][0])return PTS[PTS.length-1][1];
+  for(var i=0;i<PTS.length-1;i++){
+    var a=PTS[i][0],r0=PTS[i][1],b=PTS[i+1][0],r1=PTS[i+1][1];
+    if(t>=a&&t<=b)return r0+(r1-r0)*(t-a)/(b-a);
+  }
+  return PTS[PTS.length-1][1];
+}
+function cost(P,age,hold){return P*(rr(age)-rr(age+hold))/hold;}
+function cal(ly,lm,t){var idx=(lm-1)+t;return [ly+Math.floor(idx/12), idx%12+1];}
+function ym(a){return a[0]+"-"+(a[1]<10?"0":"")+a[1];}
+
+var els={};
+["price","age","hold","launch"].forEach(function(id){els[id]=document.getElementById(id);});
+var newOk=1;
+
+document.querySelectorAll("#newSeg button").forEach(function(b){
+  b.addEventListener("click",function(){
+    document.querySelectorAll("#newSeg button").forEach(function(x){x.classList.remove("on");});
+    b.classList.add("on"); newOk=+b.dataset.v; compute();
+  });
+});
+["price","age","hold","launch"].forEach(function(id){els[id].addEventListener("input",compute);});
+
+function compute(){
+  var P=+els.price.value;
+  var maxAge=+els.age.value;
+  var hold=+els.hold.value;
+  var lv=els.launch.value.split("-"); var ly=+lv[0]||2026, lm=+lv[1]||9;
+  var loAge = newOk? 0 : 1;
+  if(maxAge<loAge) maxAge=loAge;
+
+  // labels
+  document.getElementById("priceV").textContent="¥"+P;
+  document.getElementById("ageV").textContent=maxAge+" 月";
+  document.getElementById("holdV").textContent=hold+" 月";
+  document.getElementById("holdHint").textContent="约 "+(hold/12).toFixed(1)+" 年";
+
+  // best
+  var best=null;
+  for(var a=loAge;a<=maxAge;a++){var c=cost(P,a,hold); if(best===null||c<best.c)best={a:a,c:c};}
+  var buyP=P*rr(best.a), sellAge=best.a+hold, sellP=P*rr(sellAge), loss=buyP-sellP;
+  var base=cost(P,0,12);
+  var save=(1-best.c/base)*100;
+
+  var reco=document.getElementById("recoLine");
+  if(best.a===0){reco.textContent="最优:买【全新】(¥"+Math.round(buyP)+")";}
+  else{var bym=cal(ly,lm,best.a);
+    reco.textContent="最优:买【机龄约"+best.a+"月的二手】(¥"+Math.round(buyP)+"),约 "+ym(bym)+" 入手";}
+
+  var big=document.getElementById("costBig");
+  big.textContent="≈ ¥"+best.c.toFixed(1)+" / 月";
+  big.className="big"+(best.c>90?(best.c>115?" bad":" warn"):"");
+
+  document.getElementById("saveLine").textContent=
+    "相比『买全新只用1年』的 ¥"+base.toFixed(0)+"/月,省 "+save.toFixed(0)+"%";
+  document.getElementById("buyP").textContent="¥"+Math.round(buyP);
+  document.getElementById("sellP").textContent=sellAge+" 月 / ¥"+Math.round(sellP);
+  document.getElementById("lossP").textContent="¥"+Math.round(loss);
+
+  // bars
+  var ages=[0,3,6,9,12,14,18,24,30,36,48].filter(function(a){return a>=loAge&&a<=maxAge;});
+  if(ages.indexOf(maxAge)<0)ages.push(maxAge);
+  ages.sort(function(x,y){return x-y;});
+  var maxC=0; ages.forEach(function(a){maxC=Math.max(maxC,cost(P,a,hold));});
+  var html="";
+  ages.forEach(function(a){
+    var c=cost(P,a,hold); var isBest=(a===best.a);
+    var lab=(a===0)?"全新":(a+"月二手");
+    html+='<div class="bar'+(isBest?' best':'')+'">'+
+      '<div class="lab">'+lab+'</div>'+
+      '<div class="track"><div class="fill" style="width:'+(c/maxC*100)+'%"></div></div>'+
+      '<div class="num">¥'+c.toFixed(1)+'/月'+(isBest?' ✓':'')+'</div></div>';
+  });
+  document.getElementById("bars").innerHTML=html;
+
+  // dips
+  var dips="";
+  [12,14,24,26].forEach(function(k){
+    var d=cal(ly,lm,k); var why=(k%12===0)?"新一代发布后(价格台阶下跌)":"双11促销低点";
+    var here=(Math.abs(k-best.a)<=1)?'<span class="tag">接近你的最优买点</span>':'';
+    dips+='<div class="dip"><b>'+ym(d)+'</b> (机龄'+k+'月) — '+why+here+'</div>';
+  });
+  document.getElementById("dips").innerHTML=dips;
+
+  var msg;
+  if(best.c<=60)msg="极致省钱档:用上一代/上两代准新机,持有期拉长,体验仍在线。";
+  else if(best.c<=90)msg="性价比甜点:买准新、用满约2年,够新又省一大截。";
+  else msg="偏尝鲜档:若想再省,把持有期延长到2-3年,或改买准新二手。";
+  document.getElementById("msg").textContent="结论:"+msg;
+}
+compute();
+</script>
+</body>
+</html>
