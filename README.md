@@ -14,6 +14,16 @@
 
 > 注:`.svg` 在 GitHub 网页上点开即可直接渲染预览。
 
+### PNG 预览(英文标签,任意环境可直接看图)
+
+由于沙箱环境无 SVG 渲染器且无中文字体,PNG 版用纯 Python 渲染器(见 `scripts/minipng.py`)重绘,标签为英文。
+
+![发布价曲线](charts/png/iphone_price_curve.png)
+![首发价 vs 二手价](charts/png/iphone_secondhand_cn.png)
+![折旧曲线](charts/png/iphone_depreciation_curve.png)
+![月成本 vs 持有时长](charts/png/iphone_cost_strategy.png)
+![新科技 vs 省钱 前沿](charts/png/iphone_frontier.png)
+
 ## 核心模型
 
 持有成本(单段):
@@ -43,7 +53,8 @@ python3 scripts/iphone_secondhand_cn.py     # 国行首发 vs 二手
 python3 scripts/iphone_strategy.py          # 成本模型 + strategy_data.json
 python3 scripts/make_strategy_charts.py     # 折旧曲线 + 成本曲线图
 python3 scripts/iphone_frontier.py          # 帕累托前沿 + frontier_data.json
-python3 scripts/make_frontier_chart.py      # 前沿图
+python3 scripts/make_frontier_chart.py      # 前沿图(SVG)
+python3 scripts/make_png_charts.py          # 全部图的 PNG 版(纯 Python,无依赖)
 ```
 
 ## 数据说明
