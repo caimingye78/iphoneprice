@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="560" font-family="Segoe UI, Arial, sans-serif">
+<rect width="920" height="560" fill="#ffffff"/>
+<text x="70" y="28" font-size="20" font-weight="bold" fill="#202124">iPhone 美国发布价曲线 (2016-2025, 基础存储, 美元)</text>
+<line x1="70" y1="475.0" x2="690" y2="475.0" stroke="#e8eaed" stroke-width="1"/>
+<text x="60" y="479.0" font-size="12" text-anchor="end" fill="#5f6368">$400</text>
+<line x1="70" y1="425.0" x2="690" y2="425.0" stroke="#e8eaed" stroke-width="1"/>
+<text x="60" y="429.0" font-size="12" text-anchor="end" fill="#5f6368">$500</text>
+<line x1="70" y1="375.0" x2="690" y2="375.0" stroke="#e8eaed" stroke-width="1"/>
+<text x="60" y="379.0" font-size="12" text-anchor="end" fill="#5f6368">$600</text>
+<line x1="70" y1="325.0" x2="690" y2="325.0" stroke="#e8eaed" stroke-width="1"/>
+<text x="60" y="329.0" font-size="12" text-anchor="end" fill="#5f6368">$700</text>
+<line x1="70" y1="275.0" x2="690" y2="275.0" stroke="#e8eaed" stroke-width="1"/>
+<text x="60" y="279.0" font-size="12" text-anchor="end" fill="#5f6368">$800</text>
+<line x1="70" y1="225.0" x2="690" y2="225.0" stroke="#e8eaed" stroke-width="1"/>
+<text x="60" y="229.0" font-size="12" text-anchor="end" fill="#5f6368">$900</text>
+<line x1="70" y1="175.0" x2="690" y2="175.0" stroke="#e8eaed" stroke-width="1"/>
+<text x="60" y="179.0" font-size="12" text-anchor="end" fill="#5f6368">$1000</text>
+<line x1="70" y1="125.0" x2="690" y2="125.0" stroke="#e8eaed" stroke-width="1"/>
+<text x="60" y="129.0" font-size="12" text-anchor="end" fill="#5f6368">$1100</text>
+<line x1="70" y1="75.0" x2="690" y2="75.0" stroke="#e8eaed" stroke-width="1"/>
+<text x="60" y="79.0" font-size="12" text-anchor="end" fill="#5f6368">$1200</text>
+<line x1="70.0" y1="50" x2="70.0" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="70.0" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2016</text>
+<line x1="138.9" y1="50" x2="138.9" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="138.9" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2017</text>
+<line x1="207.8" y1="50" x2="207.8" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="207.8" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2018</text>
+<line x1="276.7" y1="50" x2="276.7" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="276.7" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2019</text>
+<line x1="345.6" y1="50" x2="345.6" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="345.6" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2020</text>
+<line x1="414.4" y1="50" x2="414.4" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="414.4" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2021</text>
+<line x1="483.3" y1="50" x2="483.3" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="483.3" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2022</text>
+<line x1="552.2" y1="50" x2="552.2" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="552.2" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2023</text>
+<line x1="621.1" y1="50" x2="621.1" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="621.1" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2024</text>
+<line x1="690.0" y1="50" x2="690.0" y2="500" stroke="#f1f3f4" stroke-width="1"/>
+<text x="690.0" y="522" font-size="12" text-anchor="middle" fill="#5f6368">2025</text>
+<path d="M70.0,475.5 L345.6,475.5 L483.3,460.5 L690.0,375.5" fill="none" stroke="#34a853" stroke-width="2.5"/>
+<circle cx="70.0" cy="475.5" r="3.5" fill="#34a853"/>
+<circle cx="345.6" cy="475.5" r="3.5" fill="#34a853"/>
+<circle cx="483.3" cy="460.5" r="3.5" fill="#34a853"/>
+<circle cx="690.0" cy="375.5" r="3.5" fill="#34a853"/>
+<path d="M70.0,350.5 L138.9,325.5 L207.8,300.5 L276.7,325.5 L345.6,275.5 L414.4,275.5 L483.3,275.5 L552.2,275.5 L621.1,275.5 L690.0,275.5" fill="none" stroke="#4285f4" stroke-width="2.5"/>
+<circle cx="70.0" cy="350.5" r="3.5" fill="#4285f4"/>
+<circle cx="138.9" cy="325.5" r="3.5" fill="#4285f4"/>
+<circle cx="207.8" cy="300.5" r="3.5" fill="#4285f4"/>
+<circle cx="276.7" cy="325.5" r="3.5" fill="#4285f4"/>
+<circle cx="345.6" cy="275.5" r="3.5" fill="#4285f4"/>
+<circle cx="414.4" cy="275.5" r="3.5" fill="#4285f4"/>
+<circle cx="483.3" cy="275.5" r="3.5" fill="#4285f4"/>
+<circle cx="552.2" cy="275.5" r="3.5" fill="#4285f4"/>
+<circle cx="621.1" cy="275.5" r="3.5" fill="#4285f4"/>
+<circle cx="690.0" cy="275.5" r="3.5" fill="#4285f4"/>
+<path d="M70.0,290.5 L138.9,275.5 L483.3,225.5 L552.2,225.5 L621.1,225.5 L690.0,175.5" fill="none" stroke="#a142f4" stroke-width="2.5"/>
+<circle cx="70.0" cy="290.5" r="3.5" fill="#a142f4"/>
+<circle cx="138.9" cy="275.5" r="3.5" fill="#a142f4"/>
+<circle cx="483.3" cy="225.5" r="3.5" fill="#a142f4"/>
+<circle cx="552.2" cy="225.5" r="3.5" fill="#a142f4"/>
+<circle cx="621.1" cy="225.5" r="3.5" fill="#a142f4"/>
+<circle cx="690.0" cy="175.5" r="3.5" fill="#a142f4"/>
+<path d="M138.9,175.5 L207.8,175.5 L276.7,175.5 L345.6,175.5 L414.4,175.5 L483.3,175.5 L552.2,175.5 L621.1,175.5 L690.0,125.5" fill="none" stroke="#fbbc05" stroke-width="2.5"/>
+<circle cx="138.9" cy="175.5" r="3.5" fill="#fbbc05"/>
+<circle cx="207.8" cy="175.5" r="3.5" fill="#fbbc05"/>
+<circle cx="276.7" cy="175.5" r="3.5" fill="#fbbc05"/>
+<circle cx="345.6" cy="175.5" r="3.5" fill="#fbbc05"/>
+<circle cx="414.4" cy="175.5" r="3.5" fill="#fbbc05"/>
+<circle cx="483.3" cy="175.5" r="3.5" fill="#fbbc05"/>
+<circle cx="552.2" cy="175.5" r="3.5" fill="#fbbc05"/>
+<circle cx="621.1" cy="175.5" r="3.5" fill="#fbbc05"/>
+<circle cx="690.0" cy="125.5" r="3.5" fill="#fbbc05"/>
+<path d="M207.8,125.5 L276.7,125.5 L345.6,125.5 L414.4,125.5 L483.3,125.5 L552.2,75.5 L621.1,75.5 L690.0,75.5" fill="none" stroke="#ea4335" stroke-width="2.5"/>
+<circle cx="207.8" cy="125.5" r="3.5" fill="#ea4335"/>
+<circle cx="276.7" cy="125.5" r="3.5" fill="#ea4335"/>
+<circle cx="345.6" cy="125.5" r="3.5" fill="#ea4335"/>
+<circle cx="414.4" cy="125.5" r="3.5" fill="#ea4335"/>
+<circle cx="483.3" cy="125.5" r="3.5" fill="#ea4335"/>
+<circle cx="552.2" cy="75.5" r="3.5" fill="#ea4335"/>
+<circle cx="621.1" cy="75.5" r="3.5" fill="#ea4335"/>
+<circle cx="690.0" cy="75.5" r="3.5" fill="#ea4335"/>
+<text x="715" y="48" font-size="13" font-weight="bold" fill="#202124">机型档位</text>
+<line x1="715" y1="60" x2="739" y2="60" stroke="#34a853" stroke-width="3"/>
+<circle cx="727" cy="60" r="3.5" fill="#34a853"/>
+<text x="747" y="64" font-size="12" fill="#3c4043">SE / e (budget)</text>
+<line x1="715" y1="86" x2="739" y2="86" stroke="#4285f4" stroke-width="3"/>
+<circle cx="727" cy="86" r="3.5" fill="#4285f4"/>
+<text x="747" y="90" font-size="12" fill="#3c4043">Standard</text>
+<line x1="715" y1="112" x2="739" y2="112" stroke="#a142f4" stroke-width="3"/>
+<circle cx="727" cy="112" r="3.5" fill="#a142f4"/>
+<text x="747" y="116" font-size="12" fill="#3c4043">Plus / Air (big std)</text>
+<line x1="715" y1="138" x2="739" y2="138" stroke="#fbbc05" stroke-width="3"/>
+<circle cx="727" cy="138" r="3.5" fill="#fbbc05"/>
+<text x="747" y="142" font-size="12" fill="#3c4043">Pro</text>
+<line x1="715" y1="164" x2="739" y2="164" stroke="#ea4335" stroke-width="3"/>
+<circle cx="727" cy="164" r="3.5" fill="#ea4335"/>
+<text x="747" y="168" font-size="12" fill="#3c4043">Pro Max</text>
+<text x="70" y="545" font-size="11" fill="#9aa0a6">数据来源: Apple Newsroom / Wikipedia / MacRumors / The Verge 等公开发布价 (美国, 不含税)</text>
+</svg>
