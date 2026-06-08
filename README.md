@@ -349,6 +349,63 @@ g 有两条单调性(因 rr 递减且凸):
 ![折旧曲线](charts/png/iphone_depreciation_curve.png)
 ![月成本 vs 持有时长](charts/png/iphone_cost_strategy.png)
 ![新科技 vs 省钱 前沿](charts/png/iphone_frontier.png)
+![iPhone18 预测](charts/png/iphone18_forecast.png)
+![新鲜度演示](charts/png/freshness_demo.png)
+![新鲜度 vs 月成本](charts/png/freshness_vs_cost.png)
+
+## 新增：价格曲线叠加图表（购买与卖出时点可视化）
+
+为了更直观地显示合理的购买点和卖出点，我们创建了价格曲线叠加图表，将多幅价格曲线整合到同一时间轴：
+
+![价格曲线叠加图](charts/price_overlay_chart.svg)
+
+### 图表说明
+
+**三线叠加：**
+1. **蓝色线**：全新机价格曲线（随时间自然折旧）
+2. **绿色线**：6个月二手价格曲线（从发布后6个月开始）
+3. **橙色线**：12个月二手价格曲线（从发布后12个月开始）
+
+**标注点：**
+- **绿色点**：推荐策略购买点（发布后6个月）
+- **红色点**：推荐策略卖出点（持有36个月后）
+- **蓝色点**：当前策略购买点（发布时买全新）
+- **红色点**：当前策略卖出点（持有14个月后）
+
+### 关键观察
+
+1. **价格差距明显**：三条线清晰地展示了不同机龄的价格差距
+2. **折旧斜率**：所有曲线都遵循相似的指数衰减规律
+3. **购买时机**：绿色曲线（6个月二手）提供了最佳性价比起点
+4. **卖出时机**：在折旧曲线相对平缓的阶段卖出，避免快速贬值期
+
+### 策略对比
+
+| 对比项 | 推荐策略 | 当前策略 | 优势 |
+|--------|----------|----------|------|
+| **购买点** | 发布后6个月（绿线起点） | 发布时（蓝线起点） | 价格低26% |
+| **卖出点** | 持有36个月后（绿线终点） | 持有14个月后（蓝线终点） | 避免快速贬值期 |
+| **价格轨迹** | 绿色曲线段 | 蓝色曲线段 | 更平缓的折旧 |
+| **月成本** | ¥88.9/月 | ¥137/月 | 节省35% |
+
+### 操作建议
+
+基于叠加图表的最佳实践：
+1. **避开快速贬值期**：前6个月折旧最快，应避免在此期间购买
+2. **选择合适起点**：6个月二手曲线起点是性价比最佳位置
+3. **利用平缓期**：持有36个月，充分利用折旧曲线的平缓阶段
+4. **跨曲线优化**：从绿色曲线开始，到橙色曲线附近结束，最大化性价比
+
+### 时间线示例（以iPhone 18为例）
+
+```
+2027-03 📅 iPhone 18发布（蓝色线起点）
+       ↓ 等待6个月，避开快速贬值
+2027-08 💚 买入点：6个月二手（绿色线起点，¥5085）
+       ↓ 持有36个月，利用平缓折旧期
+2030-08 ❤️ 卖出点：总机龄42个月（绿色线终点，¥1886）
+       ↓ 进入下一轮循环
+```
 
 ---
 
@@ -405,6 +462,12 @@ python3 scripts/iphone18_forecast.py        # iPhone18 预测 + forecast.json
 python3 scripts/make_iphone18_chart.py      # iPhone18 预测图
 python3 scripts/make_png_charts.py          # 全部图的 PNG 版(无依赖)
 python3 scripts/make_html.py                # 生成单页 report.html
+python3 scripts/make_freshness_demo.py      # 新鲜度演示图
+python3 scripts/make_freshness_cost_scatter.py  # 新鲜度vs月成本散点图
+python3 scripts/create_overlay_chart.py     # 价格曲线叠加图
+python3 scripts/analyze_delayed_release.py  # 发布时间推迟分析
+python3 scripts/generate_optimal_90yuan_plan.py # 月成本90元方案生成
+python3 scripts/accurate_90yuan_plan.py     # 准确的月成本90元方案
 ```
 
 ---

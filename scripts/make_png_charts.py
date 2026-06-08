@@ -188,3 +188,465 @@ def chart_used():
 if __name__=="__main__":
     chart_launch(); chart_depr(); chart_cost(); chart_frontier(); chart_used()
     print("All PNGs ->", os.path.abspath(OUT))
+
+
+# ================= Chart 6: iPhone 18 forecast =================
+def chart_iphone18():
+    """iPhone 18价格预测图"""
+    W,H=1050,580; c=Canvas(W,H)
+    ml,mt,mr,mb=90,80,200,80; pw=W-ml-mr; ph=H-mt-mb
+    
+    # 时间点数据
+    dates = ["2026-09", "2027-03", "2027-09", "2027-11", "2028-09", "2030-09"]
+    ages = [0, 6, 12, 14, 24, 48]
+    prices = [5999, 4919, 4439, 4199, 3299, 1920]
+    residuals = [100, 82, 74, 70, 55, 32]
+    
+    n = len(dates)
+    ymax = 7000
+    xmax = 48  # 48个月
+    
+    c.text(ml,28,"IPHONE 18 PRICE FORECAST 2026-2030",INK,3)
+    c.text(ml,52,"PREDICTED RESALE VALUE OVER TIME",GREY,2)
+    
+    X=lambda m: ml+m/xmax*pw
+    Y=lambda v: mt+(ymax-v)/ymax*ph
+    
+    # 网格
+    for v in range(0,7001,1000):
+        c.line(ml,Y(v),ml+pw,Y(v),GRID,1)
+        c.text_right(ml-10,Y(v)-7,str(v),GREY,2)
+    
+    for i, age in enumerate(ages):
+        c.text_center(X(age),mt+ph+12,str(age),GREY,2)
+        if i < len(dates):
+            c.text_center(X(age),mt+ph+30,dates[i],GREY,2)
+    
+    axes(c,ml,mt,pw,ph)
+    
+    # 绘制价格曲线
+    prev = None
+    for i in range(n):
+        x = X(ages[i])
+        y = Y(prices[i])
+        if prev:
+            c.line(prev[0], prev[1], x, y, RED, 3)
+        prev = (x, y)
+        c.disc(x, y, 6, RED)
+    
+    # 标注关键点
+    key_points = [
+        (0, "LAUNCH ¥5999"),
+        (6, "6MO ¥4919"),
+        (12, "1Y ¥4439"),
+        (14, "¥4199"),
+        (24, "2Y ¥3299"),
+        (48, "4Y ¥1920")
+    ]
+    
+    for age, label in key_points:
+        x = X(age)
+        y = Y(P * rr(age))
+        c.text(x+8, y-8, label, INK, 2)
+    
+    # 推荐购买点
+    buy_age = 6
+    sell_age = 42  # 6+36
+    buy_x = X(buy_age)
+    buy_y = Y(P * rr(buy_age))
+    sell_x = X(sell_age)
+    sell_y = Y(P * rr(sell_age))
+    
+    c.disc(buy_x, buy_y, 8, GREEN)
+    c.disc(sell_x, sell_y, 8, BLUE)
+    
+    # 图例
+    lx, ly = ml+pw+30, mt+10
+    c.text(lx, ly-22, "KEY POINTS", INK, 2)
+    c.rect(lx, ly, 26, 6, RED); c.text(lx+34, ly-6, "PRICE CURVE", INK, 2)
+    c.rect(lx, ly+30, 26, 6, GREEN); c.text(lx+34, ly+24, "BUY POINT", INK, 2)
+    c.rect(lx, ly+60, 26, 6, BLUE); c.text(lx+34, ly+54, "SELL POINT", INK, 2)
+    
+    # 策略信息
+    monthly_cost = (P*rr(buy_age) - P*rr(sell_age)) / (sell_age - buy_age)
+    c.text(lx, ly+100, "RECOMMENDED:", GREY, 2)
+    c.text(lx, ly+120, f"BUY: {buy_age}MO", GREY, 2)
+    c.text(lx, ly+140, f"HOLD: 36MO", GREY, 2)
+    c.text(lx, ly+160, f"COST: ¥{monthly_cost:.1f}/MO", GREY, 2)
+    
+    c.save(os.path.join(OUT,"iphone18_forecast.png"))
+    print("iphone18_forecast.png")
+
+# ================= Chart 7: freshness demo =================
+def chart_freshness():
+    """新鲜度演示图"""
+    W,H=1000,600; c=Canvas(W,H)
+    ml,mt,mr,mb=80,80,40,80; pw=W-ml-mr; ph=H-mt-mb
+    
+    c.text(ml,28,"FRESHNESS DEMO: 4 STRATEGIES",INK,3)
+    c.text(ml,52,"UPPER: AGE OVER TIME | LOWER: MONTHLY COST",GREY,2)
+    
+    # 四种策略
+    strategies = [
+        {"name": "NEW+1Y", "a": 0, "h": 12, "color": RED},
+        {"name": "NEW+2Y", "a": 0, "h": 24, "color": BLUE},
+        {"name": "6MO+2Y", "a": 6, "h": 24, "color": GREEN},
+        {"name": "NEW+3Y", "a": 0, "h": 36, "color": YELLOW}
+    ]
+    
+    # 上部分：机龄随时间变化
+    top_h = ph/2 - 40
+    X=lambda month: ml + (month/60) * pw
+    Y_top=lambda age: mt + (age/60) * top_h
+    
+    c.rect(ml, mt, pw, top_h, (248,249,250))
+    c.text(ml, mt-10, "AGE OVER TIME (MONTHS)", GREY, 2)
+    
+    # 时间轴
+    for month in [0, 12, 24, 36, 48, 60]:
+        x = X(month)
+        c.line(x, mt, x, mt+top_h, LGREY, 1)
+        c.text_center(x, mt+top_h+12, str(month), GREY, 2)
+    
+    # 绘制每种策略
+    for s in strategies:
+        col = s["color"]
+        x1 = X(s["a"])
+        y1 = Y_top(s["a"])
+        x2 = X(s["a"] + s["h"])
+        y2 = Y_top(s["a"] + s["h"])
+        
+        c.line(x1, y1, x2, y2, col, 3)
+        c.disc(x1, y1, 4, col)
+        c.disc(x2, y2, 4, col)
+        
+        # 平均机龄点
+        avg_age = s["a"] + s["h"]/2
+        avg_x = X(avg_age)
+        avg_y = Y_top(avg_age)
+        c.disc(avg_x, avg_y, 6, col)
+        
+        c.text(avg_x+8, avg_y-8, s["name"], INK, 2)
+    
+    # 分隔线
+    sep_y = mt + ph/2
+    c.line(ml, sep_y, ml+pw, sep_y, INK, 2)
+    
+    # 下部分：月成本
+    bottom_h = ph/2 - 40
+    bottom_y = sep_y + 20
+    Y_cost=lambda cost: bottom_y + (cost-20)/(140-20) * bottom_h
+    
+    c.rect(ml, bottom_y, pw, bottom_h, (248,249,250))
+    c.text(ml, bottom_y-10, "MONTHLY COST (RMB)", GREY, 2)
+    
+    # 成本刻度
+    for cost in [20, 40, 60, 80, 100, 120, 140]:
+        y = Y_cost(cost)
+        c.line(ml, y, ml+pw, y, LGREY, 1)
+        c.text_right(ml-10, y-7, str(cost), GREY, 2)
+    
+    # 计算并绘制成本点
+    for s in strategies:
+        col = s["color"]
+        cost = cost(s["a"], s["h"])
+        x = X(s["a"] + s["h"]/2)
+        y = Y_cost(cost)
+        
+        c.disc(x, y, 6, col)
+        c.text(x+8, y-8, f"{s['name']} ¥{cost:.1f}", INK, 2)
+    
+    # 图例
+    lx, ly = ml+20, bottom_y + bottom_h + 20
+    c.text(lx, ly-10, "STRATEGIES:", GREY, 2)
+    for i, s in enumerate(strategies):
+        yy = ly + i*24
+        c.rect(lx, yy, 20, 6, s["color"])
+        c.text(lx+30, yy-6, f"{s['name']}: a={s['a']}, h={s['h']}, avg={s['a']+s['h']/2}mo", GREY, 2)
+    
+    c.save(os.path.join(OUT,"freshness_demo.png"))
+    print("freshness_demo.png")
+
+# ================= Chart 8: freshness vs cost scatter =================
+def chart_freshness_scatter():
+    """新鲜度vs月成本散点图"""
+    W,H=1050,600; c=Canvas(W,H)
+    ml,mt,mr,mb=90,80,200,80; pw=W-ml-mr; ph=H-mt-mb
+    
+    # 生成策略点
+    strats = []
+    for a in range(0, 37, 3):
+        for h in range(6, 49, 3):
+            avg_age = a + h/2
+            monthly_cost = cost(a, h)
+            if monthly_cost <= 150:  # 只显示合理的成本
+                strats.append((avg_age, monthly_cost, a, h))
+    
+    # 前沿点（简化计算）
+    pareto = []
+    for target_age in range(6, 61, 6):
+        best_cost = 200
+        best_point = None
+        for age, cost_val, a, h in strats:
+            if abs(age - target_age) <= 3 and cost_val < best_cost:
+                best_cost = cost_val
+                best_point = (age, cost_val, a, h)
+        if best_point:
+            pareto.append(best_point)
+    
+    # 排序
+    pareto.sort(key=lambda x: x[0])
+    
+    xmax = 60
+    ymin, ymax = 20, 140
+    
+    c.text(ml,28,"FRESHNESS VS MONTHLY COST SCATTER",INK,3)
+    c.text(ml,52,"4 STRATEGIES MARKED ON FRONTIER",GREY,2)
+    
+    X=lambda a: ml+a/xmax*pw
+    Y=lambda v: mt+(ymax-v)/(ymax-ymin)*ph
+    
+    # 网格
+    for v in range(20,141,20):
+        c.line(ml,Y(v),ml+pw,Y(v),GRID,1)
+        c.text_right(ml-10,Y(v)-7,str(v),GREY,2)
+    
+    for a in range(0,61,6):
+        c.text_center(X(a),mt+ph+12,str(a),GREY,2)
+    
+    c.text_center(ml+pw/2,mt+ph+40,"AVG PHONE AGE (MONTHS)",GREY,2)
+    axes(c,ml,mt,pw,ph)
+    
+    # 所有策略点
+    for age, cost_val, _, _ in strats:
+        c.disc(X(age), Y(cost_val), 2, LGREY)
+    
+    # 前沿曲线
+    prev = None
+    for age, cost_val, _, _ in pareto:
+        x, y = X(age), Y(cost_val)
+        if prev:
+            c.line(prev[0], prev[1], x, y, RED, 3)
+        prev = (x, y)
+        c.disc(x, y, 4, RED)
+    
+    # 四种策略标注
+    highlight = [
+        (0, 12, RED, "NEW+1Y", "○"),
+        (0, 24, BLUE, "NEW+2Y", "△"),
+        (6, 24, GREEN, "6MO+2Y", "□"),
+        (0, 36, YELLOW, "NEW+3Y", "◇")
+    ]
+    
+    for a, h, col, name, symbol in highlight:
+        avg_age = a + h/2
+        cost_val = cost(a, h)
+        x, y = X(avg_age), Y(cost_val)
+        
+        # 符号
+        if symbol == "○":
+            c.circle(x, y, 7, col, 2)
+        elif symbol == "△":
+            c.triangle(x, y-7, x+6, y+5, x-6, y+5, col, 2)
+        elif symbol == "□":
+            c.rect(x-6, y-6, 12, 12, col, 2)
+        elif symbol == "◇":
+            c.diamond(x, y, 8, col, 2)
+        
+        c.disc(x, y, 3, col)
+        c.text(x+10, y-8, name, INK, 2)
+        c.text(x+10, y+6, f"¥{cost_val:.1f}", GREY, 2)
+    
+    # 用户点
+    user_age = 7
+    user_cost = 137
+    c.disc(X(user_age), Y(user_cost), 8, INK)
+    c.text(X(user_age)+10, Y(user_cost), "YOU ¥137", INK, 2)
+    
+    # 图例
+    lx, ly = ml+pw+30, mt+10
+    c.text(lx, ly-22, "4 STRATEGIES", INK, 2)
+    
+    symbols = [
+        (RED, "○", "NEW+1Y", "¥140.7"),
+        (BLUE, "△", "NEW+2Y", "¥120.9"),
+        (GREEN, "□", "6MO+2Y", "¥102.5"),
+        (YELLOW, "◇", "NEW+3Y", "¥104.8")
+    ]
+    
+    for i, (col, sym, name, price) in enumerate(symbols):
+        yy = ly + i*30
+        if sym == "○":
+            c.circle(lx+10, yy, 5, col, 2)
+        elif sym == "△":
+            c.triangle(lx+10, yy-5, lx+16, yy+3, lx+4, yy+3, col, 2)
+        elif sym == "□":
+            c.rect(lx+4, yy-5, 12, 10, col, 2)
+        elif sym == "◇":
+            c.diamond(lx+10, yy, 5, col, 2)
+        
+        c.text(lx+25, yy-6, name, INK, 2)
+        c.text(lx+25, yy+6, price, GREY, 2)
+    
+    c.save(os.path.join(OUT,"freshness_vs_cost.png"))
+    print("freshness_vs_cost.png")
+
+# ================= Chart 9: price overlay chart =================
+def chart_price_overlay():
+    """价格曲线叠加图"""
+    W,H=1100,700; c=Canvas(W,H)
+    ml,mt,mr,mb=100,90,250,90; pw=W-ml-mr; ph=H-mt-mb
+    
+    c.text(ml,28,"PRICE CURVE OVERLAY: BUY & SELL POINTS",INK,3)
+    c.text(ml,52,"3 LINES: NEW, 6MO USED, 12MO USED",GREY,2)
+    
+    # 时间范围：0-72个月（6年）
+    xmax = 72
+    ymax = 7000
+    
+    X=lambda month: ml + (month/xmax) * pw
+    Y=lambda price: mt + (ymax-price)/ymax * ph
+    
+    # 网格
+    for price in [1000,2000,3000,4000,5000,6000]:
+        y = Y(price)
+        c.line(ml, y, ml+pw, y, GRID, 1)
+        c.text_right(ml-10, y-7, str(price), GREY, 2)
+    
+    for month in [0,12,24,36,48,60,72]:
+        x = X(month)
+        c.line(x, mt, x, mt+ph, LGREY, 1)
+        c.text_center(x, mt+ph+12, str(month), GREY, 2)
+        # 日期标签
+        year = 2027 + month//12
+        month_name = (3 + month%12) % 12
+        if month_name == 0: month_name = 12
+        date_label = f"{year}-{month_name:02d}"
+        c.text_center(x, mt+ph+30, date_label, GREY, 2)
+    
+    axes(c,ml,mt,pw,ph)
+    
+    # 三条价格曲线
+    months = list(range(0, 73, 3))
+    
+    # 全新机曲线（蓝色）
+    new_prev = None
+    for m in months:
+        price = P * rr(m)
+        x, y = X(m), Y(price)
+        if new_prev:
+            c.line(new_prev[0], new_prev[1], x, y, BLUE, 3)
+        new_prev = (x, y)
+    c.text(ml+10, Y(5500), "NEW PHONE", BLUE, 2)
+    
+    # 6个月二手曲线（绿色）- 从第6个月开始
+    used6_prev = None
+    for m in months:
+        if m >= 6:
+            price = P * rr(m)
+            x, y = X(m), Y(price)
+            if used6_prev:
+                c.line(used6_prev[0], used6_prev[1], x, y, GREEN, 3)
+            used6_prev = (x, y)
+    c.text(X(30), Y(4500), "6MO USED", GREEN, 2)
+    
+    # 12个月二手曲线（橙色）- 从第12个月开始
+    used12_prev = None
+    for m in months:
+        if m >= 12:
+            price = P * rr(m)
+            x, y = X(m), Y(price)
+            if used12_prev:
+                c.line(used12_prev[0], used12_prev[1], x, y, YELLOW, 3)
+            used12_prev = (x, y)
+    c.text(X(42), Y(3500), "12MO USED", YELLOW, 2)
+    
+    # 推荐策略点
+    buy_age = 6
+    hold_months = 36
+    buy_price = P * rr(buy_age)
+    sell_price = P * rr(buy_age + hold_months)
+    
+    buy_x, buy_y = X(buy_age), Y(buy_price)
+    sell_x, sell_y = X(buy_age + hold_months), Y(sell_price)
+    
+    # 购买点（绿色）
+    c.disc(buy_x, buy_y, 8, GREEN)
+    c.text(buy_x+12, buy_y-20, "REC BUY", GREEN, 2)
+    c.text(buy_x+12, buy_y-8, f"¥{buy_price:.0f}", GREY, 2)
+    
+    # 卖出点（红色）
+    c.disc(sell_x, sell_y, 8, RED)
+    c.text(sell_x-60, sell_y-20, "REC SELL", RED, 2)
+    c.text(sell_x-60, sell_y-8, f"¥{sell_price:.0f}", GREY, 2)
+    
+    # 连接线
+    c.line(buy_x, buy_y, sell_x, sell_y, GREEN, 2, dash=[5,3])
+    
+    # 当前策略点
+    current_buy_x, current_buy_y = X(0), Y(P)
+    current_sell_x, current_sell_y = X(14), Y(P * rr(14))
+    
+    c.disc(current_buy_x, current_buy_y, 8, BLUE)
+    c.text(current_buy_x+12, current_buy_y-30, "CUR BUY", BLUE, 2)
+    
+    c.disc(current_sell_x, current_sell_y, 8, RED)
+    c.text(current_sell_x+12, current_sell_y-30, "CUR SELL", RED, 2)
+    
+    c.line(current_buy_x, current_buy_y, current_sell_x, current_sell_y, BLUE, 2, dash=[5,3])
+    
+    # 策略对比区域
+    info_y = mt+ph+60
+    info_h = 120
+    c.rect(ml, info_y, pw, info_h, (248,249,250))
+    
+    c.text(ml+10, info_y+20, "STRATEGY COMPARISON:", INK, 2)
+    
+    # 推荐策略
+    rec_cost = (buy_price - sell_price) / hold_months
+    c.text(ml+20, info_y+45, "RECOMMENDED: BUY 6MO USED, HOLD 36MO", GREEN, 2)
+    c.text(ml+40, info_y+60, f"MONTHLY COST: ¥{rec_cost:.1f} | AVG AGE: {buy_age+hold_months/2:.0f}MO", GREY, 2)
+    
+    # 当前策略
+    cur_cost = (P - P*rr(14)) / 14
+    c.text(ml+20, info_y+85, "CURRENT: BUY NEW, HOLD 14MO", BLUE, 2)
+    c.text(ml+40, info_y+100, f"MONTHLY COST: ¥{cur_cost:.1f} | AVG AGE: {0+14/2:.0f}MO", GREY, 2)
+    
+    # 改进效果
+    improvement = cur_cost - rec_cost
+    improvement_pct = (improvement / cur_cost) * 100
+    c.text(ml+20, info_y+125, f"IMPROVEMENT: SAVE ¥{improvement:.1f}/MO ({improvement_pct:.1f}%)", RED, 2)
+    
+    # 图例
+    lx, ly = ml+pw+30, mt+10
+    c.text(lx, ly-22, "LEGEND", INK, 2)
+    
+    legends = [
+        (BLUE, "NEW CURVE"),
+        (GREEN, "6MO USED"),
+        (YELLOW, "12MO USED"),
+        (GREEN, "REC BUY POINT"),
+        (RED, "SELL POINT"),
+        (BLUE, "CUR BUY POINT")
+    ]
+    
+    for i, (col, text) in enumerate(legends):
+        yy = ly + i*25
+        c.rect(lx, yy, 20, 6, col)
+        c.text(lx+30, yy-6, text, INK, 2)
+    
+    c.save(os.path.join(OUT,"price_overlay_chart.png"))
+    print("price_overlay_chart.png")
+
+# ================= 主函数 =================
+if __name__=="__main__":
+    chart_launch()
+    chart_depr()
+    chart_cost()
+    chart_frontier()
+    chart_used()
+    chart_iphone18()
+    chart_freshness()
+    chart_freshness_scatter()
+    chart_price_overlay()
+    print("All PNGs ->", os.path.abspath(OUT))
