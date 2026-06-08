@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone价格监控仪表板</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .header h1 .icon {
+            font-size: 2.8rem;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        
+        .target-cost {
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            display: inline-block;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            color: #2d3748;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title .icon {
+            font-size: 1.6rem;
+        }
+        
+        .card-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #ed8936;
+            color: white;
+        }
+        
+        .badge-danger {
+            background: #f56565;
+            color: white;
+        }
+        
+        .badge-info {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .strategy-item {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .strategy-item.warning {
+            border-left-color: #ed8936;
+        }
+        
+        .strategy-item.danger {
+            border-left-color: #f56565;
+        }
+        
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f7fafc;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .price-item:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+        
+        .price-age {
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .price-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #2d3748;
+        }
+        
+        .price-change {
+            font-size: 0.9rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+        
+        .positive {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .negative {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .alert-item {
+            background: #fff5f5;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #f56565;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(245, 101, 101, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(245, 101, 101, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 101, 101, 0); }
+        }
+        
+        .alert-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .alert-title {
+            font-weight: 700;
+            color: #c53030;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .alert-priority {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+        
+        .alert-message {
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+        
+        .alert-action {
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .alert-action:hover {
+            background: #e53e3e;
+        }
+        
+        .chart-container {
+            height: 250px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .chart {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-top: 5px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #3182ce;
+        }
+        
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #38a169;
+        }
+        
+        .btn-warning {
+            background: #ed8936;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #dd6b20;
+        }
+        
+        .time-display {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #718096;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+        
+        /* 模拟图表样式 */
+        .chart-lines {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #f7fafc, #fff);
+        }
+        
+        .chart-line {
+            position: absolute;
+            height: 2px;
+            border-radius: 1px;
+        }
+        
+        .line-new {
+            background: #4299e1;
+            width: 80%;
+            top: 30%;
+        }
+        
+        .line-used6 {
+            background: #48bb78;
+            width: 70%;
+            top: 50%;
+        }
+        
+        .line-used12 {
+            background: #ed8936;
+            width: 60%;
+            top: 70%;
+        }
+        
+        .chart-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid white;
+        }
+        
+        .point-buy {
+            background: #48bb78;
+            left: 25%;
+            top: 50%;
+        }
+        
+        .point-sell {
+            background: #f56565;
+            left: 75%;
+            top: 70%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span class="icon">📱</span>
+                iPhone价格监控仪表板
+            </h1>
+            <div class="subtitle">实时监控、智能策略、自动预警 - 让手机消费更精明</div>
+            <div class="target-cost">
+                🎯 目标月成本：¥90/月
+            </div>
+            <div class="time-display" id="timeDisplay">
+                最后更新：正在连接...
+            </div>
+        </div>
+        
+        <div class="dashboard">
+            <!-- 策略优化卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🎯</span>
+                        最优策略推荐
+                    </div>
+                    <span class="card-badge badge-success">推荐</span>
+                </div>
+                
+                <div class="strategy-item">
+                    <div style="font-weight: 600; margin-bottom: 5px;">⭐ 平衡推荐型</div>
+                    <div>买入：6个月二手（¥5085）</div>
+                    <div>持有：36个月</div>
+                    <div>卖出：¥1886（总机龄42个月）</div>
+                    <div style="margin-top: 10px; font-size: 1.2rem; font-weight: 700; color: #48bb78;">
+                        月成本：¥88.9/月
+                    </div>
+                </div>
+                
+                <div class="strategy-item warning">
+                    <div style="font-weight: 600; margin-bottom: 5px;">⚡ 较新体验型</div>
+                    <div>买入：3个月二手（¥5523）</div>
+                    <div>持有：24个月</div>
+                    <div>月成本：¥102.5/月</div>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn btn-primary" onclick="refreshStrategies()">
+                        🔄 重新计算
+                    </button>
+                    <button class="control-btn btn-success" onclick="saveStrategy()">
+                        💾 保存策略
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 价格监控卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">📈</span>
+                        实时价格监控
+                    </div>
+                    <span class="card-badge badge-info">实时</span>
+                </div>
+                
+                <div class="price-item">
+                    <div class="price-age">iPhone 18（全新）</div>
+                    <div class="price-value">¥5999</div>
+                    <div class="price-change positive">+1.2%</div>
+                </div>
+                
+                <div class="price-item">
+                    <div class="price-age">iPhone 18（6个月）</div>
+                    <div class="price-value">¥5085</div>
+                    <div class="price-change positive">+0.8%</div>
+                </div>
+                
+                <div class="price-item">
+                    <div class="price-age">iPhone 18（12个月）</div>
+                    <div class="price-value">¥4310</div>
+                    <div class="price-change negative">-0.5%</div>
+                </div>
+                
+                <div class="price-item">
+                    <div class="price-age">iPhone 17（当前）</div>
+                    <div class="price-value">¥4150</div>
+                    <div class="price-change positive">+2.1%</div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart">
+                        <div class="chart-lines">
+                            <div class="chart-line line-new"></div>
+                            <div class="chart-line line-used6"></div>
+                            <div class="chart-line line-used12"></div>
+                            <div class="chart-point point-buy"></div>
+                            <div class="chart-point point-sell"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn btn-primary" onclick="refreshPrices()">
+                        🔄 刷新价格
+                    </button>
+                    <button class="control-btn btn-warning" onclick="comparePlatforms()">
+                        🔍 平台比价
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 预警系统卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🔔</span>
+                        预警系统
+                    </div>
+                    <span class="card-badge badge-danger">3个预警</span>
+                </div>
+                
+                <div class="alert-item">
+                    <div class="alert-header">
+                        <div class="alert-title">
+                            ⚠️ 买入机会发现
+                        </div>
+                        <div class="alert-priority">优先级：高</div>
+                    </div>
+                    <div class="alert-message">
+                        iPhone 18（6个月二手）价格¥5085，低于预测价5.2%
+                    </div>
+                    <button class="alert-action" onclick="showBuyDetails()">
+                        查看详情
+                    </button>
+                </div>
+                
+                <div class="alert-item" style="background: #feebc8; border-left-color: #ed8936;">
+                    <div class="alert-header">
+                        <div class="alert-title">
+                            📈 价格快速上涨
+                        </div>
+                        <div class="alert-priority">优先级：中</div>
+                    </div>
+                    <div class="alert-message">
+                        iPhone 17价格24小时内上涨2.1%，考虑卖出
+                    </div>
+                    <button class="alert-action" style="background: #ed8936;" onclick="showSellDetails()">
+                        评估卖出
+                    </button>
+                </div>
+                
+                <div class="alert-item" style="background: #c6f6d5; border-left-color: #48bb78;">
+                    <div class="alert-header">
+                        <div class="alert-title">
+                            ✅ 成本目标达成
+                        </div>
+                        <div class="alert-priority">优先级：高</div>
+                    </div>
+                    <div class="alert-message">
+                        发现月成本¥88.9的策略，接近目标¥90
+                    </div>
+                    <button class="alert-action" style="background: #48bb78;" onclick="showStrategyDetails()">
+                        查看策略
+                    </button>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">活跃预警</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">今日检查</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">95%</div>
+                        <div class="stat-label">准确率</div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn btn-primary" onclick="configureAlerts()">
+                        ⚙️ 配置预警
+                    </button>
+                    <button class="control-btn btn-warning" onclick="clearAlerts()">
+                        🧹 清空预警
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 双机策略卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🤝</span>
+                        双机策略管理
+                    </div>
+                    <span class="card-badge badge-success">推荐</span>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 600; color: #4a5568; margin-bottom: 10px;">双机策略关键原则：</div>
+                    <div style="background: #e6fffa; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                        <div style="font-weight: 600; color: #234e52;">原则1：买入时机独立</div>
+                        <div style="color: #4a5568; font-size: 0.95rem;">新机购买与旧机卖出时机脱钩决策</div>
+                    </div>
+                    <div style="background: #fefcbf; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                        <div style="font-weight: 600; color: #744210;">原则2：资金占用上限</div>
+                        <div style="color: #4a5568; font-size: 0.95rem;">预留30%额外资金缓冲，应对市场波动</div>
+                    </div>
+                    <div style="background: #e6fffa; padding: 15px; border-radius: 10px;">
+                        <div style="font-weight: 600; color: #234e52;">原则3：折旧曲线拐点卖出</div>
+                        <div style="color: #4a5568; font-size: 0.95rem;">在折旧速率明显放缓后择机卖出</div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">¥88.9</div>
+                        <div class="stat-label">组合月成本</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">¥578</div>
+                        <div class="stat-label">年节省</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">35%</div>
+                        <div class="stat-label">成本降低</div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn btn-success" onclick="startDualPhoneMode()">
+                        🚀 启动双机模式
+                    </button>
+                    <button class="control-btn btn-primary" onclick="showDualPhoneGuide()">
+                        📖 查看指南
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>📱 iPhone价格监控系统 | 数据驱动决策 | 让科技消费更精明</p>
+            <p>⚠️ 注：本仪表板为概念原型，实际数据可能有所差异</p>
+            <p>© 2026 手机理财师 - 让每个iPhone用户都成为精明的消费者</p>
+        </div>
+    </div>
+    
+    <script>
+        // 更新时间显示
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('timeDisplay').textContent = `最后更新：${timeString}`;
+        }
+        
+        // 初始化时间
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // 模拟价格刷新
+        function refreshPrices() {
+            const priceItems = document.querySelectorAll('.price-value');
+            const changes = document.querySelectorAll('.price-change');
+            
+            // 模拟价格变化
+            priceItems.forEach((item, index) => {
+                const currentPrice = parseFloat(item.textContent.replace('¥', ''));
+                const change = (Math.random() - 0.5) * 100; // ±50元变化
+                const newPrice = Math.round(currentPrice + change);
+                
+                item.textContent = `¥${newPrice}`;
+                
+                // 更新变化百分比
+                const percentChange = (change / currentPrice * 100).toFixed(1);
+                if (change > 0) {
+                    changes[index].textContent = `+${percentChange}%`;
+                    changes[index].className = 'price-change positive';
+                } else {
+                    changes[index].textContent = `${percentChange}%`;
+                    changes[index].className = 'price-change negative';
+                }
+            });
+            
+            // 显示成功消息
+            showToast('价格已刷新！');
+        }
+        
+        // 模拟策略刷新
+        function refreshStrategies() {
+            const strategyItems = document.querySelectorAll('.strategy-item');
+            
+            // 轻微调整策略成本
+            strategyItems.forEach((item, index) => {
+                const costElements = item.querySelectorAll('div');
+                if (costElements.length > 4) {
+                    const currentCost = parseFloat(costElements[4].textContent.match(/¥([\d.]+)/)[1]);
+                    const newCost = currentCost + (Math.random() - 0.5) * 5; // ±2.5元变化
+                    costElements[4].innerHTML = `月成本：¥${newCost.toFixed(1)}/月`;
+                }
+            });
+            
+            showToast('策略已重新计算！');
+        }
+        
+        // 模拟保存策略
+        function saveStrategy() {
+            showToast('策略已保存到您的收藏！');
+        }
+        
+        // 显示平台比价
+        function comparePlatforms() {
+            showToast('正在比较各平台价格...');
+            
+            // 模拟比较结果
+            setTimeout(() => {
+                alert('平台比价结果：\n\n闲鱼：¥5085 ✅ 推荐\n转转：¥5200 ⚠️ 偏高\n爱回收：¥4950 💰 最低\n京东二手：¥5150');
+            }, 1000);
+        }
+        
+        // 查看买入详情
+        function showBuyDetails() {
+            alert('买入机会详情：\n\n📱 iPhone 18（6个月二手）\n💰 当前价格：¥5085\n🎯 预测价格：¥5362\n📉 低于预测：5.2%\n⭐ 推荐指数：★★★★☆\n\n建议操作：\n1. 验证手机成色（95新以上）\n2. 检查配件齐全\n3. 通过平台担保交易');
+        }
+        
+        // 查看卖出详情
+        function showSellDetails() {
+            alert('卖出机会评估：\n\n📱 iPhone 17（当前持有）\n💰 当前价格：¥4150\n📈 24小时涨幅：2.1%\n🎯 目标价格：¥4200\n⭐ 卖出建议：★★★☆☆\n\n考虑因素：\n• 价格可能继续上涨\n• 市场热度较高\n• 新一代即将发布');
+        }
+        
+        // 查看策略详情
+        function showStrategyDetails() {
+            alert('策略详情：\n\n⭐ 平衡推荐型策略\n\n📊 详细配置：\n• 买入机龄：6个月二手\n• 购买价格：¥5085\n• 持有时长：36个月\n• 卖出价格：¥1886\n• 月成本：¥88.9/月\n• 平均机龄：24个月\n\n📈 预期效果：\n• 年节省：¥578\n• 成本降低：35%\n• 风险等级：低');
+        }
+        
+        // 配置预警
+        function configureAlerts() {
+            alert('预警配置：\n\n🎯 目标成本预警：\n• 月成本≤¥95时提醒\n\n💰 价格波动预警：\n• 单日涨跌≥3%时提醒\n• 价格低于预测5%提醒\n• 价格高于预测10%提醒\n\n📱 市场事件预警：\n• 新机发布会提醒\n• 平台促销活动提醒\n• 重大政策变化提醒');
+        }
+        
+        // 清空预警
+        function clearAlerts() {
+            const alertItems = document.querySelectorAll('.alert-item');
+            alertItems.forEach(item => item.style.display = 'none');
+            
+            const badge = document.querySelector('.card-header .badge-danger');
+            if (badge) badge.textContent = '0个预警';
+            
+            showToast('预警已清空！');
+        }
+        
+        // 启动双机模式
+        function startDualPhoneMode() {
+            showToast('双机模式已启动！\n\n📱 新机：iPhone 18（主力）\n📱 旧机：iPhone 17（备用）\n💰 组合月成本：¥88.9/月');
+        }
+        
+        // 查看双机指南
+        function showDualPhoneGuide() {
+            alert('双机策略操作指南：\n\n阶段1：新机购买\n• 基于月成本目标独立决策\n• 选择最佳买入时机\n\n阶段2：双机共存（3-6个月）\n• 新机：主力使用，体验新功能\n• 旧机：逐步降级为备用机\n• 对比测试新旧机差异\n\n阶段3：旧机卖出\n• 等待价格高点\n• 选择市场热点时机\n• 或长期持有作为备用机\n\n关键原则：\n1. 买入时机独立原则\n2. 资金占用上限原则\n3. 新旧机功能互补原则\n4. 折旧曲线拐点卖出原则');
+        }
+        
+        // 显示Toast通知
+        function showToast(message) {
+            // 移除现有toast
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            // 创建新toast
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #48bb78;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // 3秒后消失
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // 模拟实时更新
+        setInterval(() => {
+            // 随机更新一个价格
+            const priceItems = document.querySelectorAll('.price-value');
+            if (priceItems.length > 0) {
+                const randomIndex = Math.floor(Math.random() * priceItems.length);
+                const item = priceItems[randomIndex];
+                const currentPrice = parseFloat(item.textContent.replace('¥', ''));
+                const smallChange = (Math.random() - 0.5) * 20; // ±10元变化
+                const newPrice = Math.round(currentPrice + smallChange);
+                
+                if (newPrice > 0) {
+                    item.textContent = `¥${newPrice}`;
+                }
+            }
+        }, 30000); // 每30秒更新一次
+        
+        console.log('iPhone价格监控仪表板已加载');
+        console.log('功能：实时价格监控、策略推荐、预警系统、双机管理');
+    </script>
+</body>
+</html>
