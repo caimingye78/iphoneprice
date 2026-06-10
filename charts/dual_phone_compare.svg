@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="540" font-family="Segoe UI,PingFang SC,Microsoft YaHei,Arial,sans-serif">
+<rect width="920" height="540" fill="#ffffff"/>
+<text x="75" y="30" font-size="18" font-weight="bold" fill="#202124">换机两条路线的累计损耗对比</text>
+<text x="75" y="50" font-size="12" fill="#9aa0a6">同样从“持有旧机”过渡到“持有新机”，谁更省 — 数值为示意性测算</text>
+<line x1="75" y1="470.0" x2="700" y2="470.0" stroke="#eef0f2"/>
+<text x="67" y="474.0" font-size="11" text-anchor="end" fill="#5f6368">0</text>
+<line x1="75" y1="416.7" x2="700" y2="416.7" stroke="#eef0f2"/>
+<text x="67" y="420.7" font-size="11" text-anchor="end" fill="#5f6368">400</text>
+<line x1="75" y1="363.3" x2="700" y2="363.3" stroke="#eef0f2"/>
+<text x="67" y="367.3" font-size="11" text-anchor="end" fill="#5f6368">800</text>
+<line x1="75" y1="310.0" x2="700" y2="310.0" stroke="#eef0f2"/>
+<text x="67" y="314.0" font-size="11" text-anchor="end" fill="#5f6368">1200</text>
+<line x1="75" y1="256.7" x2="700" y2="256.7" stroke="#eef0f2"/>
+<text x="67" y="260.7" font-size="11" text-anchor="end" fill="#5f6368">1600</text>
+<line x1="75" y1="203.3" x2="700" y2="203.3" stroke="#eef0f2"/>
+<text x="67" y="207.3" font-size="11" text-anchor="end" fill="#5f6368">2000</text>
+<line x1="75" y1="150.0" x2="700" y2="150.0" stroke="#eef0f2"/>
+<text x="67" y="154.0" font-size="11" text-anchor="end" fill="#5f6368">2400</text>
+<line x1="75" y1="96.7" x2="700" y2="96.7" stroke="#eef0f2"/>
+<text x="67" y="100.7" font-size="11" text-anchor="end" fill="#5f6368">2800</text>
+<text x="75.0" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">0</text>
+<text x="144.4" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">2</text>
+<text x="213.9" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">4</text>
+<text x="283.3" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">6</text>
+<text x="352.8" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">8</text>
+<text x="422.2" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">10</text>
+<text x="491.7" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">12</text>
+<text x="561.1" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">14</text>
+<text x="630.6" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">16</text>
+<text x="700.0" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">18</text>
+<text x="387.5" y="514.0" font-size="12" text-anchor="middle" fill="#3c4043">过渡开始后的月份</text>
+<text x="22" y="270.0" font-size="12" fill="#3c4043" transform="rotate(-90 22 270.0)">累计损耗（元）</text>
+<line x1="213.9" y1="70" x2="213.9" y2="470" stroke="#ea4335" stroke-dasharray="4 4" opacity="0.5"/>
+<text x="217.9" y="84.0" font-size="9.5" fill="#ea4335">A:第4月卖旧机</text>
+<line x1="283.3" y1="70" x2="283.3" y2="470" stroke="#34a853" stroke-dasharray="4 4" opacity="0.5"/>
+<text x="287.3" y="98.0" font-size="9.5" fill="#34a853">B:第6月买准新</text>
+<path d="M75.0,470.0 L109.7,432.0 L144.4,394.0 L179.2,356.0 L213.9,318.0 L248.6,294.0 L283.3,270.0 L318.1,259.3 L352.8,248.7 L387.5,238.0 L422.2,227.3 L456.9,216.7 L491.7,206.0 L526.4,190.0 L561.1,174.0 L595.8,160.0 L630.6,146.0 L665.3,132.0 L700.0,118.0" fill="none" stroke="#ea4335" stroke-width="3"/>
+<path d="M75.0,470.0 L109.7,468.4 L144.4,466.8 L179.2,465.2 L213.9,463.6 L248.6,462.0 L283.3,460.4 L318.1,449.7 L352.8,439.1 L387.5,428.4 L422.2,417.7 L456.9,407.1 L491.7,396.4 L526.4,380.4 L561.1,364.4 L595.8,350.4 L630.6,336.4 L665.3,322.4 L700.0,308.4" fill="none" stroke="#34a853" stroke-width="3"/>
+<circle cx="700.0" cy="118.0" r="4" fill="#ea4335"/>
+<text x="706.0" y="122.0" font-size="11" fill="#ea4335" font-weight="bold">A ¥2640</text>
+<circle cx="700.0" cy="308.4" r="4" fill="#34a853"/>
+<text x="706.0" y="312.4" font-size="11" fill="#34a853" font-weight="bold">B ¥1212</text>
+<line x1="670.0" y1="118.0" x2="670.0" y2="308.4" stroke="#1a73e8" stroke-width="1.5"/>
+<text x="664.0" y="213.2" font-size="11" text-anchor="end" fill="#1a73e8" font-weight="bold">B省¥1428</text>
+<rect x="710" y="70" width="200" height="400" fill="#f8f9fa" stroke="#dadce0" rx="6"/>
+<rect x="718" y="81" width="14" height="4" fill="#ea4335"/>
+<text x="738" y="88" font-size="11.5" font-weight="bold" fill="#ea4335">路线A 先买后卖</text>
+<text x="718" y="109" font-size="10" fill="#5f6368">第0月按发布价买全新</text>
+<text x="718" y="126" font-size="10" fill="#5f6368">旧机并行持有,第4月卖出</text>
+<text x="718" y="143" font-size="10" fill="#5f6368">→ 旧机闲置期照样贬值</text>
+<text x="718" y="160" font-size="10" fill="#5f6368">→ 新机吃满首发高位折旧</text>
+<rect x="718" y="173" width="14" height="4" fill="#34a853"/>
+<text x="738" y="180" font-size="11.5" font-weight="bold" fill="#34a853">路线B 先卖+备用机</text>
+<text x="718" y="201" font-size="10" fill="#5f6368">旧机发布前高点先卖</text>
+<text x="718" y="218" font-size="10" fill="#5f6368">地板价备用机顶 6 个月</text>
+<text x="718" y="235" font-size="10" fill="#5f6368">等新机回落到合理价(准新)</text>
+<text x="718" y="252" font-size="10" fill="#5f6368">→ 避开双持贬值</text>
+<text x="718" y="269" font-size="10" fill="#5f6368">→ 避开首发价那段陡跌</text>
+<rect x="716" y="283" width="194" height="86" fill="#fff8e1" stroke="#f9ab00" rx="4"/>
+<text x="722" y="297" font-size="10.5" font-weight="bold" fill="#b06000">代价（要诚实看）</text>
+<text x="722" y="310" font-size="9.5" fill="#7a5300">B 在过渡的 6 个月里</text>
+<text x="722" y="325" font-size="9.5" fill="#7a5300">用的是旧备用机，</text>
+<text x="722" y="340" font-size="9.5" fill="#7a5300">牺牲了这段时间的</text>
+<text x="722" y="355" font-size="9.5" fill="#7a5300">“最新科技”体验。</text>
+<text x="722" y="370" font-size="9.5" fill="#7a5300">省钱 ⇄ 尝鲜，需自己权衡。</text>
+</svg>
