@@ -1,0 +1,160 @@
+# iPhone价格监控Web应用 - Docker Compose
+
+version: '3.8'
+
+services:
+  # 主应用服务
+  iphone-monitor:
+    build: .
+    container_name: iphone-price-monitor
+    ports:
+      - "8000:8000"
+    volumes:
+      # 数据持久化
+      - ./data:/app/data
+      - ./logs:/app/logs
+      # 配置文件（可选）
+      - ./config.yaml:/app/config.yaml:ro
+    environment:
+      # 应用配置
+      - APP_PORT=8000
+      - APP_DEBUG=false
+      - APP_NAME=iPhone价格监控系统
+      
+      # 监控配置
+      - MONITOR_TARGET_COST=90.0
+      - MONITOR_TARGET_MODEL=iPhone 18
+      - MONITOR_CHECK_INTERVAL=3600
+      
+      # 数据库配置
+      - DATABASE_PATH=/app/data/iphone_monitor.db
+      - DATABASE_BACKUP_ENABLED=true
+      
+      # 日志配置
+      - LOG_LEVEL=INFO
+      - LOG_FILE=/app/logs/web_app.log
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - iphone-monitor-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.iphone-monitor.rule=Host(`iphone-monitor.local`)"
+      - "traefik.http.routers.iphone-monitor.entrypoints=web"
+
+  # 数据库管理（可选）
+  db-admin:
+    image: phpmyadmin/phpmyadmin
+    container_name: iphone-monitor-db-admin
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=iphone-monitor
+      - PMA_PORT=8000
+      - PMA_ARBITRARY=1
+    depends_on:
+      - iphone-monitor
+    networks:
+      - iphone-monitor-network
+    restart: unless-stopped
+
+  # Nginx反向代理（可选）
+  nginx:
+    image: nginx:alpine
+    container_name: iphone-monitor-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - iphone-monitor
+    networks:
+      - iphone-monitor-network
+    restart: unless-stopped
+
+  # 监控和日志（可选）
+  prometheus:
+    image: prom/prometheus
+    container_name: iphone-monitor-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - iphone-monitor-network
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana
+    container_name: iphone-monitor-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana-datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      - prometheus
+    networks:
+      - iphone-monitor-network
+    restart: unless-stopped
+
+  # 备份服务（可选）
+  backup:
+    image: alpine
+    container_name: iphone-monitor-backup
+    volumes:
+      - ./data:/app/data:ro
+      - ./backups:/backups
+    command: |
+      sh -c '
+      echo "Starting backup service..."
+      while true; do
+        timestamp=$$(date +%Y%m%d_%H%M%S)
+        echo "Backup at $$timestamp"
+        sqlite3 /app/data/iphone_monitor.db ".backup /backups/iphone_monitor_$$timestamp.db"
+        # 清理旧备份（保留最近7天）
+        find /backups -name "iphone_monitor_*.db" -mtime +7 -delete
+        # 每天备份一次
+        sleep 86400
+      done
+      '
+    networks:
+      - iphone-monitor-network
+    restart: unless-stopped
+
+# 网络配置
+networks:
+  iphone-monitor-network:
+    driver: bridge
+    name: iphone-monitor-network
+
+# 数据卷配置
+volumes:
+  prometheus-data:
+    driver: local
+    name: iphone-monitor-prometheus-data
+  grafana-data:
+    driver: local
+    name: iphone-monitor-grafana-data
+  backup-data:
+    driver: local
+    name: iphone-monitor-backup-data

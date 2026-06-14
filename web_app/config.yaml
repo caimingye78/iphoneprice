@@ -1,0 +1,245 @@
+# iPhone价格监控Web应用配置
+
+# 应用配置
+app:
+  name: "iPhone价格监控系统"
+  version: "1.0.0"
+  debug: true
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins:
+    - "http://localhost:8000"
+    - "http://127.0.0.1:8000"
+    - "http://localhost:3000"
+
+# 监控配置
+monitor:
+  # 目标配置
+  target_monthly_cost: 90.0
+  target_model: "iPhone 18"
+  
+  # 预警阈值
+  buy_threshold: 0.05      # 低于预测价5%触发买入
+  sell_threshold: 0.10     # 高于预测价10%触发卖出
+  cost_tolerance: 0.03     # 月成本误差3%内视为达标
+  
+  # 监控频率（秒）
+  check_interval: 3600     # 1小时
+  quick_check_interval: 300 # 5分钟（高频率检查模式）
+  
+  # 数据源配置
+  data_sources:
+    - "闲鱼"
+    - "转转"
+    - "爱回收"
+    - "京东二手"
+    - "淘宝二手"
+
+# 数据库配置
+database:
+  path: "data/iphone_monitor.db"
+  backup_enabled: true
+  backup_interval: 86400  # 24小时备份一次
+  max_backup_count: 30    # 保留30个备份
+
+# 预警通知配置
+notifications:
+  email:
+    enabled: false
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    sender_email: ""
+    sender_password: ""
+    receiver_email: ""
+  
+  push:
+    enabled: false
+    # 支持的推送服务: pushover, bark, serverchan, 企业微信
+    service: "pushover"
+    api_key: ""
+    user_key: ""
+  
+  wechat:
+    enabled: false
+    corp_id: ""
+    agent_id: ""
+    secret: ""
+
+# API密钥配置
+api_keys:
+  # 实际API密钥需要在这里配置
+  xianyu: ""
+  zhuanzhuan: ""
+  aihuishou: ""
+  jd: ""
+  taobao: ""
+
+# 图表配置
+charts:
+  # 颜色配置
+  colors:
+    primary: "#007bff"
+    success: "#28a745"
+    warning: "#ffc107"
+    danger: "#dc3545"
+    info: "#17a2b8"
+    dark: "#343a40"
+    light: "#f8f9fa"
+  
+  # 图表选项
+  price_chart:
+    type: "line"
+    show_grid: true
+    show_legend: true
+    animate: true
+    height: 300
+  
+  # 数据点限制
+  max_data_points: 1000
+  default_points: 100
+
+# 日志配置
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: "logs/web_app.log"
+  max_size: 10485760  # 10MB
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Web界面配置
+web_ui:
+  title: "iPhone价格监控系统"
+  theme: "light"  # light, dark, auto
+  language: "zh-CN"
+  auto_refresh: true
+  refresh_interval: 30  # 秒
+  
+  # 功能开关
+  features:
+    realtime_monitor: true
+    strategy_calculator: true
+    alert_management: true
+    price_history: true
+    data_export: true
+    user_settings: true
+
+# 安全配置
+security:
+  # CORS设置
+  cors:
+    enabled: true
+    allow_origins: ["*"]
+    allow_methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    allow_headers: ["*"]
+    allow_credentials: true
+  
+  # 速率限制
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+    burst_limit: 10
+  
+  # API密钥验证
+  api_key_auth:
+    enabled: false
+    required_for: ["/api/admin/*", "/api/config/*"]
+
+# 性能配置
+performance:
+  # 缓存配置
+  cache:
+    enabled: true
+    ttl: 300  # 5分钟
+    max_size: 1000
+    
+  # 数据库连接池
+  database_pool:
+    min_connections: 1
+    max_connections: 10
+    timeout: 30
+    
+  # WebSocket配置
+  websocket:
+    ping_interval: 30
+    pong_timeout: 10
+    max_connections: 100
+
+# 部署配置
+deployment:
+  # Docker配置
+  docker:
+    image_name: "iphone-price-monitor"
+    tag: "latest"
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./data:/app/data"
+      - "./logs:/app/logs"
+    
+  # 环境变量覆盖
+  environment_variables:
+    - "MONITOR_TARGET_COST"
+    - "MONITOR_TARGET_MODEL"
+    - "EMAIL_SMTP_SERVER"
+    - "EMAIL_SENDER"
+    - "EMAIL_PASSWORD"
+
+# 调试配置
+debug:
+  # 模拟数据模式（当没有真实API时使用）
+  mock_data: true
+  
+  # 调试端点
+  enable_debug_endpoints: false
+  
+  # 详细日志
+  verbose_logging: false
+  
+  # 测试模式
+  test_mode: false
+
+# 价格预测模型
+prediction_model:
+  # 基础价格（iPhone标准款首发价）
+  base_price: 5999
+  
+  # 残值率衰减参数
+  lambda: 0.0265  # 计算方式: -ln(0.68)/14
+  
+  # 发布时间
+  launch_date: "2027-03-01"
+  
+  # 预测公式
+  formula: "P(t) = P0 * exp(-λ*t)"
+  
+  # 置信区间
+  confidence_interval: 0.95
+  lower_bound_factor: 0.9
+  upper_bound_factor: 1.1
+
+# 策略优化参数
+strategy_optimization:
+  # 搜索范围
+  buy_age_range: [0, 36]     # 买入机龄范围（月）
+  hold_months_range: [12, 48] # 持有时长范围（月）
+  
+  # 步长
+  buy_age_step: 3
+  hold_months_step: 3
+  
+  # 权重参数
+  weights:
+    monthly_cost: 0.7
+    freshness: 0.2
+    risk: 0.1
+    
+  # 新鲜度计算
+  freshness_formula: "a + h/2"  # a=买入机龄, h=持有时长
+
+# 双机策略配置
+dual_phone_strategy:
+  enabled: true
+  max_overlap_months: 6
+  capital_buffer_percent: 30
+  min_selling_age: 12
+  max_selling_age: 48

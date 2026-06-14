@@ -1,0 +1,87 @@
+# Render Blueprint 配置文件
+# iPhone价格监控系统部署配置
+
+services:
+  # 主Web服务 - FastAPI后端
+  - type: web
+    name: iphone-price-monitor
+    env: python
+    region: singapore  # 亚洲地区，适合中国用户
+    plan: free  # 免费计划
+    
+    # 构建配置
+    buildCommand: |
+      pip install -r requirements.txt
+    
+    # 启动命令
+    startCommand: |
+      gunicorn app_simple:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --timeout 120
+    
+    # 健康检查
+    healthCheckPath: /api/status
+    healthCheckTimeout: 30
+    healthCheckInterval: 60
+    healthCheckRetries: 3
+    
+    # 环境变量
+    envVars:
+      - key: RENDER_EXTERNAL_URL
+        fromService:
+          type: web
+          name: iphone-price-monitor
+          property: url
+      
+      - key: PYTHONPATH
+        value: .
+      
+      - key: DATABASE_URL
+        value: data/iphone_monitor.db
+      
+      - key: APP_ENV
+        value: production
+      
+      - key: LOG_LEVEL
+        value: INFO
+    
+    # 自动缩放（免费版无自动缩放）
+    autoDeploy: true
+    
+    # 资源限制（免费计划）
+    disk:
+      name: data
+      mountPath: /opt/render/project/data
+      sizeGB: 1
+    
+    # 端口配置
+    port: 8000
+
+# 环境变量（安全敏感数据，需在Render控制台手动设置）
+# 请访问 Render Dashboard → Your Service → Environment → Add Environment Variable
+#
+# 必需的环境变量:
+# 1. DATABASE_URL (会自动创建)
+# 2. RENDER_EXTERNAL_URL (自动)
+#
+# 可选环境变量:
+# API_KEY: 用于外部API调用的密钥
+# DEBUG_MODE: false
+
+# 数据库（如果需要PostgreSQL）
+# databases:
+#   - name: iphone_monitor_db
+#     databaseName: iphone_monitor
+#     user: iphone_monitor_user
+#     region: singapore
+#     plan: free
+
+# 自动部署配置
+buildFilter:
+  paths:
+    - web_app/**
+
+# 依赖缓存优化
+cache:
+  directories:
+    - __pycache__
+    - .pytest_cache
+    - .cache
