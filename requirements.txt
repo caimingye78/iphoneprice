@@ -1,0 +1,4 @@
+# iPhone价格监控系统 - 简化依赖
+fastapi>=0.104.1
+uvicorn>=0.24.0
+pydantic>=2.5.0

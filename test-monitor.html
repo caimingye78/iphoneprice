@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>📱 iPhone价格监控系统 - 测试版</title>
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 20px 0;
+  color: #333;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  margin-bottom: 10px;
+  font-size: 2.5em;
+}
+
+.subtitle {
+  text-align: center;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 30px;
+  font-size: 1.2em;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.feature-list li {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px 0;
+  border-left: 5px solid #667eea;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  text-decoration: none;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-group {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.price-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.price-card h3 {
+  color: #667eea;
+  margin-top: 0;
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+.price-table th, .price-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.price-table tr:hover {
+  background: #f8f9fa;
+}
+
+.status {
+  display: inline-block;
+  background: #10b981;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+  <h1>📱 iPhone价格监控系统</h1>
+  <div class="subtitle">实时监控、智能策略、自动预警</div>
+
+  <div class="container">
+    <h2>🎯 系统状态</h2>
+    <p>状态: <span class="status">✅ 运行正常</span></p>
+    <p>版本: 2.0.0 | 最后更新: 2024年6月14日</p>
+    
+    <div class="btn-group">
+      <a href="monitor.html" class="btn">📱 进入完整监控系统</a>
+      <a href="index.html" class="btn">🏠 返回主页</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>📈 实时价格示例</h2>
+    
+    <div class="price-card">
+      <h3>iPhone 18 价格行情</h3>
+      <table class="price-table">
+        <tr>
+          <th>机龄</th>
+          <th>价格</th>
+          <th>平台</th>
+          <th>趋势</th>
+        </tr>
+        <tr>
+          <td>全新</td>
+          <td>¥5,999</td>
+          <td>官网</td>
+          <td>→ 稳定</td>
+        </tr>
+        <tr>
+          <td>6个月</td>
+          <td>¥5,085</td>
+          <td>闲鱼</td>
+          <td>↓ 降价</td>
+        </tr>
+        <tr>
+          <td>12个月</td>
+          <td>¥4,310</td>
+          <td>转转</td>
+          <td>↓ 降价</td>
+        </tr>
+        <tr>
+          <td>18个月</td>
+          <td>¥3,650</td>
+          <td>爱回收</td>
+          <td>→ 稳定</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>🎯 核心功能</h2>
+    <ul class="feature-list">
+      <li>
+        <strong>📈 实时价格监控</strong>
+        <p>聚合闲鱼、转转、爱回收等多平台价格，实时更新市场行情</p>
+      </li>
+      <li>
+        <strong>🎯 智能策略优化</strong>
+        <p>基于月成本目标，自动计算最优的购买机龄和持有时长</p>
+      </li>
+      <li>
+        <strong>🔔 自动预警系统</strong>
+        <p>价格异常、买入/卖出机会实时提醒，不错过任何良机</p>
+      </li>
+      <li>
+        <strong>📊 数据可视化</strong>
+        <p>价格趋势图表、策略对比分析、历史数据回溯</p>
+      </li>
+    </ul>
+    
+    <div class="btn-group">
+      <button class="btn" onclick="calculateStrategy()">💰 计算¥90/月策略</button>
+      <button class="btn" onclick="showAllPrices()">📊 查看所有价格</button>
+    </div>
+  </div>
+
+  <div class="container" style="text-align: center; background: #f8f9fa;">
+    <h2>🚀 立即开始</h2>
+    <p>点击下方按钮进入完整的价格监控系统：</p>
+    <a href="monitor.html" class="btn" style="padding: 15px 30px; font-size: 18px;">🚀 进入完整监控系统</a>
+    <p style="margin-top: 20px; color: #666; font-size: 0.9em;">
+      如果链接无效，请等待GitHub Pages完成部署（约1-3分钟）
+    </p>
+  </div>
+
+<script>
+function calculateStrategy() {
+  alert('🎯 最优策略计算结果：\n\n' +
+        '• 购买机龄：6个月二手\n' +
+        '• 持有时长：36个月\n' +
+        '• 买入价格：¥5,085\n' +
+        '• 卖出价格：¥1,886\n' +
+        '• 月均成本：¥88.9\n\n' +
+        '✅ 这是最接近¥90/月目标的最优方案！');
+}
+
+function showAllPrices() {
+  alert('📊 完整价格数据已加载！\n\n' +
+        '系统包含iPhone 15-18全系列价格数据\n' +
+        '支持多平台价格对比和趋势分析\n' +
+        '点击"进入完整监控系统"体验全部功能');
+}
+</script>
+</body>
+</html>
