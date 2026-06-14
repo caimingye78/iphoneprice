@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>双机换机策略 · iPhone 价格分析</title>
+<style>
+:root{--ink:#202124;--grey:#5f6368;--line:#e8eaed;--blue:#1a73e8;--bg:#f8f9fa;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.75}
+.wrap{max-width:840px;margin:0 auto;padding:36px 20px 80px}
+h1{font-size:27px;margin:0 0 6px}
+h2{font-size:20px;margin:34px 0 10px;padding-top:10px;border-top:1px solid var(--line);color:#174ea6}
+.sub{color:var(--grey);font-size:14px;margin-bottom:18px}
+.fig{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin:18px 0;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.fig figcaption{color:var(--grey);font-size:13px;margin-top:8px}
+pre{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:14px 16px;overflow:auto;font-size:13px;line-height:1.5}
+.formula{background:#eef4ff;border-left:4px solid var(--blue);padding:10px 14px;border-radius:6px;font-family:Consolas,Menlo,monospace;font-size:14px;margin:12px 0}
+.warn{background:#fff8e1;border-left:4px solid #f9ab00;padding:12px 16px;border-radius:6px;margin:14px 0}
+.law{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:12px 0}
+.law b{color:#174ea6}
+.key{background:#e6f4ea;border-left:4px solid #1e8e3e;padding:12px 16px;border-radius:6px;margin:14px 0}
+a.back{display:inline-block;margin-bottom:18px;color:var(--blue);text-decoration:none;font-size:14px}
+.foot{color:#9aa0a6;font-size:12px;margin-top:36px;text-align:center}
+ul{padding-left:22px} li{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; 返回首页</a>
+<h1>双机换机策略：先买后卖 vs 先卖后买 + 备用机</h1>
+<div class="sub">用数学把"什么时候买、用多久、怎么过渡"讲清楚。金额为示意性测算，用于看清方向与原理。</div>
+
+<h2>一、统一的损耗定义</h2>
+<p>沿用一个核心指标——你实际"消耗"掉多少钱：</p>
+<div class="formula">单段月成本 = (买入价 - 卖出价) / 持有月数</div>
+<p>把它推广到"换机过渡"，用身家变化来度量：</p>
+<div class="formula">累计损耗(t) = 期初身家 - 当前身家<br>身家 = 现金 + 手中所有手机的当前回收价</div>
+<p>买手机本身不是损耗（现金变成等值手机资产）。真正的损耗只来自两处：<b>手机贬值</b>，以及<b>买贵了的溢价</b>。</p>
+
+<h2>二、先理解"新鲜度" = a + h/2</h2>
+<p>设买入机龄为 a、持有月数为 h（注意 h 是持有时长，不是月成本）。手中这台机的机龄从 a 匀速升到 a+h，平均值正好是中点：</p>
+<div class="formula">平均机龄（新鲜度） = a + h/2 &nbsp;&nbsp;（越小代表用的科技越新）</div>
+<figure class="fig"><svg style="max-width:100%;height:auto" xmlns="http://www.w3.org/2000/svg" width="900" height="400" font-family="Segoe UI,Arial,sans-serif">
+<rect width="900" height="400" fill="#fff"/>
+<text x="70" y="28" font-size="18" font-weight="bold" fill="#202124">新鲜度 vs 月成本：四种策略对比</text>
+<text x="70" y="48" font-size="12" fill="#9aa0a6">上：机龄随时间变化（蓝线=机龄上升，红点=平均机龄）；下：月成本（越小越省）</text>
+<rect x="70" y="80" width="790" height="85.0" fill="#f8f9fa" stroke="#dadce0"/>
+<text x="465.0" y="150.0" font-size="12" text-anchor="middle" fill="#5f6368">机龄随时间上升（单位：月）</text>
+<line x1="70.0" y1="80" x2="70.0" y2="165.0" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="70.0" y="175.0" font-size="10" text-anchor="middle" fill="#5f6368">0</text>
+<line x1="228.0" y1="80" x2="228.0" y2="165.0" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="228.0" y="175.0" font-size="10" text-anchor="middle" fill="#5f6368">12</text>
+<line x1="386.0" y1="80" x2="386.0" y2="165.0" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="386.0" y="175.0" font-size="10" text-anchor="middle" fill="#5f6368">24</text>
+<line x1="544.0" y1="80" x2="544.0" y2="165.0" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="544.0" y="175.0" font-size="10" text-anchor="middle" fill="#5f6368">36</text>
+<line x1="702.0" y1="80" x2="702.0" y2="165.0" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="702.0" y="175.0" font-size="10" text-anchor="middle" fill="#5f6368">48</text>
+<line x1="860.0" y1="80" x2="860.0" y2="165.0" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="860.0" y="175.0" font-size="10" text-anchor="middle" fill="#5f6368">60</text>
+<line x1="70.0" y1="80.0" x2="228.0" y2="97.0" stroke="#ea4335" stroke-width="3" opacity="0.7"/>
+<circle cx="70.0" cy="80.0" r="4" fill="#ea4335"/>
+<circle cx="228.0" cy="97.0" r="4" fill="#ea4335"/>
+<circle cx="149.0" cy="88.5" r="6" fill="none" stroke="#ea4335" stroke-width="2"/>
+<text x="157.0" y="92.5" font-size="11" fill="#202124" font-weight="bold">买全新用1年</text>
+<text x="157.0" y="106.5" font-size="10" fill="#5f6368">平均机龄：6.0个月</text>
+<line x1="70.0" y1="80.0" x2="386.0" y2="114.0" stroke="#4285f4" stroke-width="3" opacity="0.7"/>
+<circle cx="70.0" cy="80.0" r="4" fill="#4285f4"/>
+<circle cx="386.0" cy="114.0" r="4" fill="#4285f4"/>
+<circle cx="228.0" cy="97.0" r="6" fill="none" stroke="#4285f4" stroke-width="2"/>
+<text x="236.0" y="101.0" font-size="11" fill="#202124" font-weight="bold">买全新用2年</text>
+<text x="236.0" y="115.0" font-size="10" fill="#5f6368">平均机龄：12.0个月</text>
+<line x1="149.0" y1="88.5" x2="465.0" y2="122.5" stroke="#34a853" stroke-width="3" opacity="0.7"/>
+<circle cx="149.0" cy="88.5" r="4" fill="#34a853"/>
+<circle cx="465.0" cy="122.5" r="4" fill="#34a853"/>
+<circle cx="307.0" cy="105.5" r="6" fill="none" stroke="#34a853" stroke-width="2"/>
+<text x="315.0" y="109.5" font-size="11" fill="#202124" font-weight="bold">买半年二手用2年</text>
+<text x="315.0" y="123.5" font-size="10" fill="#5f6368">平均机龄：18.0个月</text>
+<line x1="70.0" y1="80.0" x2="544.0" y2="131.0" stroke="#fbbc04" stroke-width="3" opacity="0.7"/>
+<circle cx="70.0" cy="80.0" r="4" fill="#fbbc04"/>
+<circle cx="544.0" cy="131.0" r="4" fill="#fbbc04"/>
+<circle cx="307.0" cy="105.5" r="6" fill="none" stroke="#fbbc04" stroke-width="2"/>
+<text x="315.0" y="109.5" font-size="11" fill="#202124" font-weight="bold">买全新用3年</text>
+<text x="315.0" y="123.5" font-size="10" fill="#5f6368">平均机龄：18.0个月</text>
+<line x1="70" y1="205.0" x2="860" y2="205.0" stroke="#dadce0" stroke-width="2"/>
+<rect x="70" y="225.0" width="790" height="85.0" fill="#f8f9fa" stroke="#dadce0"/>
+<text x="465.0" y="345" font-size="12" text-anchor="middle" fill="#5f6368">每月成本（元）</text>
+<line x1="70" y1="225.0" x2="860" y2="225.0" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="62.0" y="229.0" font-size="10" text-anchor="end" fill="#5f6368">20</text>
+<line x1="70" y1="239.2" x2="860" y2="239.2" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="62.0" y="243.2" font-size="10" text-anchor="end" fill="#5f6368">40</text>
+<line x1="70" y1="253.3" x2="860" y2="253.3" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="62.0" y="257.3" font-size="10" text-anchor="end" fill="#5f6368">60</text>
+<line x1="70" y1="267.5" x2="860" y2="267.5" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="62.0" y="271.5" font-size="10" text-anchor="end" fill="#5f6368">80</text>
+<line x1="70" y1="281.7" x2="860" y2="281.7" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="62.0" y="285.7" font-size="10" text-anchor="end" fill="#5f6368">100</text>
+<line x1="70" y1="295.8" x2="860" y2="295.8" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="62.0" y="299.8" font-size="10" text-anchor="end" fill="#5f6368">120</text>
+<line x1="70" y1="310.0" x2="860" y2="310.0" stroke="#e8eaed" stroke-dasharray="2,2"/>
+<text x="62.0" y="314.0" font-size="10" text-anchor="end" fill="#5f6368">140</text>
+<circle cx="149.0" cy="310.5" r="6" fill="#ea4335"/>
+<line x1="149.0" y1="88.5" x2="149.0" y2="310.5" stroke="#ea4335" stroke-width="1" stroke-dasharray="4,2" opacity="0.5"/>
+<text x="157.0" y="314.5" font-size="10" fill="#202124" font-weight="bold">买全新用1年</text>
+<text x="157.0" y="328.5" font-size="10" fill="#5f6368">月成本：¥140.7/月</text>
+<circle cx="228.0" cy="296.5" r="6" fill="#4285f4"/>
+<line x1="228.0" y1="97.0" x2="228.0" y2="296.5" stroke="#4285f4" stroke-width="1" stroke-dasharray="4,2" opacity="0.5"/>
+<text x="236.0" y="300.5" font-size="10" fill="#202124" font-weight="bold">买全新用2年</text>
+<text x="236.0" y="314.5" font-size="10" fill="#5f6368">月成本：¥120.9/月</text>
+<circle cx="307.0" cy="283.4" r="6" fill="#34a853"/>
+<line x1="307.0" y1="105.5" x2="307.0" y2="283.4" stroke="#34a853" stroke-width="1" stroke-dasharray="4,2" opacity="0.5"/>
+<text x="315.0" y="287.4" font-size="10" fill="#202124" font-weight="bold">买半年二手用2年</text>
+<text x="315.0" y="301.4" font-size="10" fill="#5f6368">月成本：¥102.5/月</text>
+<circle cx="307.0" cy="285.1" r="6" fill="#fbbc04"/>
+<line x1="307.0" y1="105.5" x2="307.0" y2="285.1" stroke="#fbbc04" stroke-width="1" stroke-dasharray="4,2" opacity="0.5"/>
+<text x="315.0" y="289.1" font-size="10" fill="#202124" font-weight="bold">买全新用3年</text>
+<text x="315.0" y="303.1" font-size="10" fill="#5f6368">月成本：¥104.8/月</text>
+<circle cx="162.2" cy="307.9" r="8" fill="none" stroke="#202124" stroke-width="2"/>
+<text x="172.2" y="311.9" font-size="11" fill="#202124" font-weight="bold">你的情况</text>
+<text x="172.2" y="327.9" font-size="10" fill="#5f6368">平均机龄：7个月，月成本：¥137/月</text>
+</svg><figcaption>机龄随时间匀速上升，平均机龄即起点与终点的中点</figcaption></figure>
+
+<h2>三、新鲜度 vs 月成本：策略空间</h2>
+<p>每种买法对应一个点 (平均机龄, 月成本)。把"同样新鲜度下最便宜"的点连起来，就是帕累托最优前沿——你只该在这条线上选点。</p>
+<figure class="fig"><svg style="max-width:100%;height:auto" xmlns="http://www.w3.org/2000/svg" width="900" height="520" font-family="Segoe UI,Arial,sans-serif">
+<rect width="900" height="520" fill="#fff"/>
+<text x="70" y="28" font-size="18" font-weight="bold" fill="#202124">新鲜度 vs 月成本：策略空间散点图</text>
+<text x="70" y="46" font-size="12" fill="#9aa0a6">四种典型策略在前沿曲线上对照比较（越小越新越省）</text>
+<line x1="70" y1="450.0" x2="860" y2="450.0" stroke="#e8eaed"/>
+<text x="62" y="454.0" font-size="11" text-anchor="end" fill="#5f6368">20</text>
+<line x1="70" y1="385.0" x2="860" y2="385.0" stroke="#e8eaed"/>
+<text x="62" y="389.0" font-size="11" text-anchor="end" fill="#5f6368">40</text>
+<line x1="70" y1="320.0" x2="860" y2="320.0" stroke="#e8eaed"/>
+<text x="62" y="324.0" font-size="11" text-anchor="end" fill="#5f6368">60</text>
+<line x1="70" y1="255.0" x2="860" y2="255.0" stroke="#e8eaed"/>
+<text x="62" y="259.0" font-size="11" text-anchor="end" fill="#5f6368">80</text>
+<line x1="70" y1="190.0" x2="860" y2="190.0" stroke="#e8eaed"/>
+<text x="62" y="194.0" font-size="11" text-anchor="end" fill="#5f6368">100</text>
+<line x1="70" y1="125.0" x2="860" y2="125.0" stroke="#e8eaed"/>
+<text x="62" y="129.0" font-size="11" text-anchor="end" fill="#5f6368">120</text>
+<line x1="70" y1="60.0" x2="860" y2="60.0" stroke="#e8eaed"/>
+<text x="62" y="64.0" font-size="11" text-anchor="end" fill="#5f6368">140</text>
+<text x="70.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">0</text>
+<text x="149.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">6</text>
+<text x="228.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">12</text>
+<text x="307.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">18</text>
+<text x="386.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">24</text>
+<text x="465.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">30</text>
+<text x="544.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">36</text>
+<text x="623.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">42</text>
+<text x="702.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">48</text>
+<text x="781.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">54</text>
+<text x="860.0" y="470.0" font-size="10" text-anchor="middle" fill="#5f6368">60</text>
+<text x="465.0" y="492.0" font-size="12" text-anchor="middle" fill="#3c4043">平均机龄（月） 越小越新</text>
+<text x="20" y="255.0" font-size="12" fill="#3c4043" transform="rotate(-90 20 255.0)">元/月</text>
+<circle cx="149.0" cy="92.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="188.5" cy="114.3" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="228.0" cy="149.4" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="267.5" cy="177.0" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="307.0" cy="200.7" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="346.5" cy="222.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="386.0" cy="238.8" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="228.0" cy="206.2" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="267.5" cy="222.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="307.0" cy="238.8" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="346.5" cy="255.0" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="386.0" cy="271.2" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="425.5" cy="282.9" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="465.0" cy="297.6" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="307.0" cy="206.2" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="346.5" cy="233.2" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="386.0" cy="255.0" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="425.5" cy="274.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="465.0" cy="287.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="504.5" cy="303.8" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="544.0" cy="316.1" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="386.0" cy="271.2" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="425.5" cy="287.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="465.0" cy="303.8" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="504.5" cy="313.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="544.0" cy="328.1" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="583.5" cy="338.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="623.0" cy="346.3" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="465.0" cy="303.8" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="504.5" cy="320.0" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="544.0" cy="328.1" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="583.5" cy="342.8" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="623.0" cy="352.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="662.5" cy="359.3" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="702.0" cy="364.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="544.0" cy="336.2" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="583.5" cy="341.8" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="623.0" cy="356.7" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="662.5" cy="365.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="702.0" cy="371.4" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="741.5" cy="375.6" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="781.0" cy="381.1" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="623.0" cy="352.5" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="662.5" cy="368.8" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="702.0" cy="376.9" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="741.5" cy="381.8" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="781.0" cy="385.0" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="820.5" cy="389.6" r="2" fill="#dadce0" opacity="0.6"/>
+<circle cx="860.0" cy="393.1" r="2" fill="#dadce0" opacity="0.6"/>
+<path d="M149.0,92.5 L188.5,114.3 L228.0,206.2 L267.5,222.5 L307.0,238.8 L346.5,255.0 L386.0,271.2 L425.5,287.5 L465.0,303.8 L504.5,320.0 L544.0,336.2 L583.5,342.8 L623.0,356.7 L662.5,368.8 L702.0,376.9 L741.5,381.8 L781.0,385.0 L820.5,389.6 L860.0,393.1" fill="none" stroke="#ea4335" stroke-width="2.5"/>
+<circle cx="149.0" cy="92.5" r="3" fill="#ea4335"/>
+<circle cx="188.5" cy="114.3" r="3" fill="#ea4335"/>
+<circle cx="228.0" cy="206.2" r="3" fill="#ea4335"/>
+<circle cx="267.5" cy="222.5" r="3" fill="#ea4335"/>
+<circle cx="307.0" cy="238.8" r="3" fill="#ea4335"/>
+<circle cx="346.5" cy="255.0" r="3" fill="#ea4335"/>
+<circle cx="386.0" cy="271.2" r="3" fill="#ea4335"/>
+<circle cx="425.5" cy="287.5" r="3" fill="#ea4335"/>
+<circle cx="465.0" cy="303.8" r="3" fill="#ea4335"/>
+<circle cx="504.5" cy="320.0" r="3" fill="#ea4335"/>
+<circle cx="544.0" cy="336.2" r="3" fill="#ea4335"/>
+<circle cx="583.5" cy="342.8" r="3" fill="#ea4335"/>
+<circle cx="623.0" cy="356.7" r="3" fill="#ea4335"/>
+<circle cx="662.5" cy="368.8" r="3" fill="#ea4335"/>
+<circle cx="702.0" cy="376.9" r="3" fill="#ea4335"/>
+<circle cx="741.5" cy="381.8" r="3" fill="#ea4335"/>
+<circle cx="781.0" cy="385.0" r="3" fill="#ea4335"/>
+<circle cx="820.5" cy="389.6" r="3" fill="#ea4335"/>
+<circle cx="860.0" cy="393.1" r="3" fill="#ea4335"/>
+<defs><g id="symbol-买全新用1年"><circle r="7" fill="none" stroke-width="2"/></g></defs>
+<use href="#symbol-买全新用1年" x="149.0" y="57.664109993809184" stroke="#ea4335" fill="none"/>
+<circle cx="149.0" cy="57.664109993809184" r="3" fill="#ea4335"/>
+<text x="157.0" y="49.7" font-size="10.5" fill="#ea4335" font-weight="bold">买全新用1年</text>
+<text x="157.0" y="63.7" font-size="9.5" fill="#5f6368">平均机龄: 6.0个月 | 月成本: ¥140.7/月</text>
+<defs><g id="symbol-买全新用2年"><polygon points="0,-8 7,6 -7,6" fill="none" stroke-width="2"/></g></defs>
+<use href="#symbol-买全新用2年" x="228.0" y="122.03056582498752" stroke="#4285f4" fill="none"/>
+<circle cx="228.0" cy="122.03056582498752" r="3" fill="#4285f4"/>
+<text x="236.0" y="114.0" font-size="10.5" fill="#4285f4" font-weight="bold">买全新用2年</text>
+<text x="236.0" y="128.0" font-size="9.5" fill="#5f6368">平均机龄: 12.0个月 | 月成本: ¥120.9/月</text>
+<defs><g id="symbol-买半年二手用2年"><rect x="-6" y="-6" width="12" height="12" fill="none" stroke-width="2"/></g></defs>
+<use href="#symbol-买半年二手用2年" x="307.0" y="181.8982786477227" stroke="#34a853" fill="none"/>
+<circle cx="307.0" cy="181.8982786477227" r="3" fill="#34a853"/>
+<text x="315.0" y="201.9" font-size="10.5" fill="#34a853" font-weight="bold">买半年二手用2年</text>
+<text x="315.0" y="215.9" font-size="9.5" fill="#5f6368">平均机龄: 18.0个月 | 月成本: ¥102.5/月</text>
+<defs><g id="symbol-买全新用3年"><polygon points="0,-8 6,0 0,8 -6,0" fill="none" stroke-width="2"/></g></defs>
+<use href="#symbol-买全新用3年" x="307.0" y="174.31825350697352" stroke="#fbbc04" fill="none"/>
+<circle cx="307.0" cy="174.31825350697352" r="3" fill="#fbbc04"/>
+<text x="187.0" y="166.3" font-size="10.5" fill="#fbbc04" font-weight="bold">买全新用3年</text>
+<text x="187.0" y="180.3" font-size="9.5" fill="#5f6368">平均机龄: 18.0个月</text>
+<text x="187.0" y="194.3" font-size="9.5" fill="#5f6368">月成本: ¥104.8/月</text>
+<text x="187.0" y="208.3" font-size="9.5" fill="#5f6368">买入机龄: 0个月, 持有: 36个月</text>
+<circle cx="162.2" cy="69.8" r="8" fill="none" stroke="#202124" stroke-width="2"/>
+<text x="172.2" y="73.8" font-size="10.5" fill="#202124" font-weight="bold">你的情况</text>
+<text x="172.2" y="87.8" font-size="9.5" fill="#5f6368">平均机龄: 7个月, 月成本: ¥137/月</text>
+<rect x="670" y="65" width="190" height="150" fill="#f8f9fa" stroke="#dadce0" rx="5"/>
+<text x="680" y="80" font-size="11" fill="#202124" font-weight="bold">四种策略说明：</text>
+<defs><g id="legend-symbol-0"><circle r="7" fill="none" stroke-width="2"/></g></defs>
+<use href="#legend-symbol-0" x="680" y="100" stroke="#ea4335" fill="none"/>
+<text x="695" y="104" font-size="10" fill="#202124">买全新用1年</text>
+<text x="695" y="116" font-size="9" fill="#5f6368">平均机龄: 6.0个月, 月成本: ¥140.7</text>
+<defs><g id="legend-symbol-1"><polygon points="0,-8 7,6 -7,6" fill="none" stroke-width="2"/></g></defs>
+<use href="#legend-symbol-1" x="680" y="125" stroke="#4285f4" fill="none"/>
+<text x="695" y="129" font-size="10" fill="#202124">买全新用2年</text>
+<text x="695" y="141" font-size="9" fill="#5f6368">平均机龄: 12.0个月, 月成本: ¥120.9</text>
+<defs><g id="legend-symbol-2"><rect x="-6" y="-6" width="12" height="12" fill="none" stroke-width="2"/></g></defs>
+<use href="#legend-symbol-2" x="680" y="150" stroke="#34a853" fill="none"/>
+<text x="695" y="154" font-size="10" fill="#202124">买半年二手用2年</text>
+<text x="695" y="166" font-size="9" fill="#5f6368">平均机龄: 18.0个月, 月成本: ¥102.5</text>
+<defs><g id="legend-symbol-3"><polygon points="0,-8 6,0 0,8 -6,0" fill="none" stroke-width="2"/></g></defs>
+<use href="#legend-symbol-3" x="680" y="175" stroke="#fbbc04" fill="none"/>
+<text x="695" y="179" font-size="10" fill="#202124">买全新用3年</text>
+<text x="695" y="191" font-size="9" fill="#5f6368">平均机龄: 18.0个月, 月成本: ¥104.8</text>
+<rect x="80" y="80" width="250" height="80" fill="#f0f7ff" stroke="#4285f4" stroke-width="1" rx="5" opacity="0.9"/>
+<text x="90" y="90" font-size="11" fill="#4285f4" font-weight="bold">关键发现：</text>
+<text x="90" y="105" font-size="10" fill="#202124">• "买全新用3年" 与 "买半年二手用2年"</text>
+<text x="100" y="120" font-size="9.5" fill="#5f6368">平均机龄相同(18个月)，新鲜度等价！</text>
+<text x="90" y="135" font-size="10" fill="#202124">• 但后者月成本 ¥102.5 vs 前者 ¥104.8</text>
+<text x="100" y="150" font-size="9.5" fill="#5f6368">提前体验半年二手，每月省¥2.3</text>
+</svg><figcaption>红线为最优前沿；"买全新只用1年"在最贵端（冤大头区）</figcaption></figure>
+
+<h2>四、两条换机路线</h2>
+<ul>
+<li><b>路线A 先买后卖（双持过渡）</b>：第0月按发布价买全新；旧机并行持有，过渡几月后卖出。隐藏成本：旧机闲置期照样贬值 + 新机吃满首发那段最陡折旧。</li>
+<li><b>路线B 先卖后买 + 备用机</b>：旧机在发布前高点先卖锁定残值；地板价备用机（几乎不贬值）过渡；等新机回落到合理价（准新）再入手。避开了双持贬值，也避开了首发陡跌。</li>
+</ul>
+
+<h2>五、累计损耗对比</h2>
+<figure class="fig"><svg style="max-width:100%;height:auto" xmlns="http://www.w3.org/2000/svg" width="920" height="540" font-family="Segoe UI,PingFang SC,Microsoft YaHei,Arial,sans-serif">
+<rect width="920" height="540" fill="#ffffff"/>
+<text x="75" y="30" font-size="18" font-weight="bold" fill="#202124">换机两条路线的累计损耗对比</text>
+<text x="75" y="50" font-size="12" fill="#9aa0a6">同样从“持有旧机”过渡到“持有新机”，谁更省 — 数值为示意性测算</text>
+<line x1="75" y1="470.0" x2="700" y2="470.0" stroke="#eef0f2"/>
+<text x="67" y="474.0" font-size="11" text-anchor="end" fill="#5f6368">0</text>
+<line x1="75" y1="416.7" x2="700" y2="416.7" stroke="#eef0f2"/>
+<text x="67" y="420.7" font-size="11" text-anchor="end" fill="#5f6368">400</text>
+<line x1="75" y1="363.3" x2="700" y2="363.3" stroke="#eef0f2"/>
+<text x="67" y="367.3" font-size="11" text-anchor="end" fill="#5f6368">800</text>
+<line x1="75" y1="310.0" x2="700" y2="310.0" stroke="#eef0f2"/>
+<text x="67" y="314.0" font-size="11" text-anchor="end" fill="#5f6368">1200</text>
+<line x1="75" y1="256.7" x2="700" y2="256.7" stroke="#eef0f2"/>
+<text x="67" y="260.7" font-size="11" text-anchor="end" fill="#5f6368">1600</text>
+<line x1="75" y1="203.3" x2="700" y2="203.3" stroke="#eef0f2"/>
+<text x="67" y="207.3" font-size="11" text-anchor="end" fill="#5f6368">2000</text>
+<line x1="75" y1="150.0" x2="700" y2="150.0" stroke="#eef0f2"/>
+<text x="67" y="154.0" font-size="11" text-anchor="end" fill="#5f6368">2400</text>
+<line x1="75" y1="96.7" x2="700" y2="96.7" stroke="#eef0f2"/>
+<text x="67" y="100.7" font-size="11" text-anchor="end" fill="#5f6368">2800</text>
+<text x="75.0" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">0</text>
+<text x="144.4" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">2</text>
+<text x="213.9" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">4</text>
+<text x="283.3" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">6</text>
+<text x="352.8" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">8</text>
+<text x="422.2" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">10</text>
+<text x="491.7" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">12</text>
+<text x="561.1" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">14</text>
+<text x="630.6" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">16</text>
+<text x="700.0" y="490.0" font-size="10" text-anchor="middle" fill="#5f6368">18</text>
+<text x="387.5" y="514.0" font-size="12" text-anchor="middle" fill="#3c4043">过渡开始后的月份</text>
+<text x="22" y="270.0" font-size="12" fill="#3c4043" transform="rotate(-90 22 270.0)">累计损耗（元）</text>
+<line x1="213.9" y1="70" x2="213.9" y2="470" stroke="#ea4335" stroke-dasharray="4 4" opacity="0.5"/>
+<text x="217.9" y="84.0" font-size="9.5" fill="#ea4335">A:第4月卖旧机</text>
+<line x1="283.3" y1="70" x2="283.3" y2="470" stroke="#34a853" stroke-dasharray="4 4" opacity="0.5"/>
+<text x="287.3" y="98.0" font-size="9.5" fill="#34a853">B:第6月买准新</text>
+<path d="M75.0,470.0 L109.7,432.0 L144.4,394.0 L179.2,356.0 L213.9,318.0 L248.6,294.0 L283.3,270.0 L318.1,259.3 L352.8,248.7 L387.5,238.0 L422.2,227.3 L456.9,216.7 L491.7,206.0 L526.4,190.0 L561.1,174.0 L595.8,160.0 L630.6,146.0 L665.3,132.0 L700.0,118.0" fill="none" stroke="#ea4335" stroke-width="3"/>
+<path d="M75.0,470.0 L109.7,468.4 L144.4,466.8 L179.2,465.2 L213.9,463.6 L248.6,462.0 L283.3,460.4 L318.1,449.7 L352.8,439.1 L387.5,428.4 L422.2,417.7 L456.9,407.1 L491.7,396.4 L526.4,380.4 L561.1,364.4 L595.8,350.4 L630.6,336.4 L665.3,322.4 L700.0,308.4" fill="none" stroke="#34a853" stroke-width="3"/>
+<circle cx="700.0" cy="118.0" r="4" fill="#ea4335"/>
+<text x="706.0" y="122.0" font-size="11" fill="#ea4335" font-weight="bold">A ¥2640</text>
+<circle cx="700.0" cy="308.4" r="4" fill="#34a853"/>
+<text x="706.0" y="312.4" font-size="11" fill="#34a853" font-weight="bold">B ¥1212</text>
+<line x1="670.0" y1="118.0" x2="670.0" y2="308.4" stroke="#1a73e8" stroke-width="1.5"/>
+<text x="664.0" y="213.2" font-size="11" text-anchor="end" fill="#1a73e8" font-weight="bold">B省¥1428</text>
+<rect x="710" y="70" width="200" height="400" fill="#f8f9fa" stroke="#dadce0" rx="6"/>
+<rect x="718" y="81" width="14" height="4" fill="#ea4335"/>
+<text x="738" y="88" font-size="11.5" font-weight="bold" fill="#ea4335">路线A 先买后卖</text>
+<text x="718" y="109" font-size="10" fill="#5f6368">第0月按发布价买全新</text>
+<text x="718" y="126" font-size="10" fill="#5f6368">旧机并行持有,第4月卖出</text>
+<text x="718" y="143" font-size="10" fill="#5f6368">→ 旧机闲置期照样贬值</text>
+<text x="718" y="160" font-size="10" fill="#5f6368">→ 新机吃满首发高位折旧</text>
+<rect x="718" y="173" width="14" height="4" fill="#34a853"/>
+<text x="738" y="180" font-size="11.5" font-weight="bold" fill="#34a853">路线B 先卖+备用机</text>
+<text x="718" y="201" font-size="10" fill="#5f6368">旧机发布前高点先卖</text>
+<text x="718" y="218" font-size="10" fill="#5f6368">地板价备用机顶 6 个月</text>
+<text x="718" y="235" font-size="10" fill="#5f6368">等新机回落到合理价(准新)</text>
+<text x="718" y="252" font-size="10" fill="#5f6368">→ 避开双持贬值</text>
+<text x="718" y="269" font-size="10" fill="#5f6368">→ 避开首发价那段陡跌</text>
+<rect x="716" y="283" width="194" height="86" fill="#fff8e1" stroke="#f9ab00" rx="4"/>
+<text x="722" y="297" font-size="10.5" font-weight="bold" fill="#b06000">代价（要诚实看）</text>
+<text x="722" y="310" font-size="9.5" fill="#7a5300">B 在过渡的 6 个月里</text>
+<text x="722" y="325" font-size="9.5" fill="#7a5300">用的是旧备用机，</text>
+<text x="722" y="340" font-size="9.5" fill="#7a5300">牺牲了这段时间的</text>
+<text x="722" y="355" font-size="9.5" fill="#7a5300">“最新科技”体验。</text>
+<text x="722" y="370" font-size="9.5" fill="#7a5300">省钱 ⇄ 尝鲜，需自己权衡。</text>
+</svg><figcaption>同样从"持有旧机"过渡到"持有新机"，路线B 累计损耗明显更低</figcaption></figure>
+<pre>月份   路线A累计损耗   路线B累计损耗   B比A省
+  0          0             0           0
+  4       1140            48        1092
+  6       1500            72        1428
+ 12       1980           552        1428
+ 18       2640          1212        1428</pre>
+<p>到第18个月：路线A约 <b>2640</b> 元，路线B约 <b>1212</b> 元，B 比 A 省约 <b>1428</b> 元。拆开看 A 的损耗：</p>
+<ul>
+<li>旧机双持贬值：从高点4200拖到第4月卖只剩约3780，白掉约 420 元</li>
+<li>新机吃满首发陡跌：6000买全新，到期值约4440，掉了约 1560 元</li>
+</ul>
+<p>差距的大头来自<b>买入价位</b>：6000买进掉到4440 = 损失1560；4920（准新）买进掉到4440 = 损失480。越过首发那段陡坡再上车，绝对折旧小得多。</p>
+
+<h2>六、必须诚实看待的代价</h2>
+<div class="warn">路线B 省钱，代价是：过渡的那几个月里你用的是旧备用机，牺牲了这段时间的"最新科技"体验。它用"晚几个月用上新机"换来更低损耗——这正是"省钱 ⇄ 尝鲜"的权衡。</div>
+
+<h2>七、三条铁律</h2>
+<div class="law"><b>铁律1 备用机要够旧。</b>必须是已经地板价、几乎不再贬值的老机。拿还值钱的机器当备用，等于换个地方承担双持成本。</div>
+<div class="law"><b>铁律2 过渡期设硬上限。</b>别为了等更低价无限拖。定死线：到点不管价格如何，按目标月成本线入手。</div>
+<div class="law"><b>铁律3 买卖决策独立。</b>卖旧机看"发布前高点"（每年8月底、下一代发布前是硬截止线）；买新机看"月成本是否达标"。两件事分开判断，互不迁就。</div>
+
+<h2>八、一句话结论</h2>
+<div class="key">把换机当成资产的"高抛低吸 + 零成本过渡"：在已知的跌价之前卖掉旧主力锁定残值，用一台不再贬值的备用机零成本顶过空窗，再在合理价位把新机接回来。前提就是三条铁律——备用机够旧、过渡别拖太久、买卖各自独立判断。</div>
+
+<div class="foot">数据为公开行情整理与基于历史规律的估算，金额为示意性测算，仅供参考。</div>
+</div>
+</body>
+</html>
